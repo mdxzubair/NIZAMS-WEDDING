@@ -1,0 +1,2822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nizam's Family Wedding Invitation</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #080808;
+            --black2: #0e0e0e;
+            --black3: #161616;
+            --emerald: #0D3B2E;
+            --emerald2: #1A5C45;
+            --emerald3: #14493A;
+            --gold: #C9A84C;
+            --gold2: #E8C97A;
+            --gold3: #8B6914;
+            --gold4: #D4B85A;
+            --cream: #FAF3E0;
+            --white: #FFFFFF;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--cream);
+            overflow-x: hidden;
+            background: #050505;
+            text-align: center;
+        }
+
+        .heading { font-family: 'Cinzel Decorative', serif; letter-spacing: 3px; }
+        .cultural { font-family: 'Amiri', serif; }
+
+        #gate-zoom-portal {
+            position: fixed;
+            z-index: 10000;
+            pointer-events: none;
+            border-radius: 9999px;
+            background:
+                radial-gradient(circle at center, rgba(250,243,224,0.95) 0%, rgba(232,201,122,0.75) 18%, rgba(201,168,76,0.45) 42%, rgba(13,59,46,0.9) 72%, #050505 100%);
+            box-shadow:
+                0 0 35px rgba(232,201,122,0.75),
+                0 0 90px rgba(201,168,76,0.45),
+                inset 0 0 40px rgba(250,243,224,0.25);
+            opacity: 0;
+            transform: translateZ(0) scale(1);
+            transition:
+                left 1.15s cubic-bezier(0.76, 0, 0.24, 1),
+                top 1.15s cubic-bezier(0.76, 0, 0.24, 1),
+                width 1.15s cubic-bezier(0.76, 0, 0.24, 1),
+                height 1.15s cubic-bezier(0.76, 0, 0.24, 1),
+                transform 1.15s cubic-bezier(0.76, 0, 0.24, 1),
+                opacity 0.55s ease;
+            will-change: left, top, width, height, opacity;
+        }
+
+        #welcome-gate.gate-opening #welcome-stage {
+            transform: scale(1.1);
+            opacity: 0.45;
+            filter: blur(1.5px);
+        }
+
+        @media (max-width: 600px) {
+            #gate-zoom-portal { box-shadow: 0 0 24px rgba(232,201,122,0.7), 0 0 50px rgba(201,168,76,0.35); }
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           PREMIUM $10K BACKGROUND SYSTEM — 7 LAYERED COMPOSITION
+           ═══════════════════════════════════════════════════════════ */
+
+        /* Layer 1: Deep black foundation with emerald nebula pools */
+        #bg-base {
+            position: fixed; inset: 0; z-index: -10; pointer-events: none;
+            background:
+                radial-gradient(ellipse 120% 80% at 15% 20%, rgba(13,59,46,0.55) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 70% at 85% 75%, rgba(20,73,58,0.45) 0%, transparent 55%),
+                radial-gradient(ellipse 60% 50% at 50% 10%, rgba(201,168,76,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 60% at 50% 90%, rgba(139,105,20,0.06) 0%, transparent 50%),
+                linear-gradient(180deg, #050505 0%, #0a0a0a 30%, #080808 70%, #050505 100%);
+        }
+
+        /* Layer 2: Animated golden aurora / light bleed */
+        #bg-aurora {
+            position: fixed; inset: 0; z-index: -9; pointer-events: none;
+            background:
+                radial-gradient(ellipse 40% 35% at var(--ax, 30%) var(--ay, 25%), rgba(201,168,76,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 35% 40% at var(--bx, 70%) var(--by, 70%), rgba(232,201,122,0.08) 0%, transparent 65%);
+            transition: background 3s ease;
+        }
+
+        /* Layer 3: Islamic geometric mashrabiya pattern */
+        #bg-pattern {
+            position: fixed; inset: 0; z-index: -8; pointer-events: none;
+            opacity: 0.3;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23C9A84C' stroke-width='0.5' opacity='0.5'%3E%3Cpath d='M40 0L80 40L40 80L0 40Z'/%3E%3Cpath d='M40 10L70 40L40 70L10 40Z'/%3E%3Ccircle cx='40' cy='40' r='6'/%3E%3Cline x1='40' y1='0' x2='40' y2='80'/%3E%3Cline x1='0' y1='40' x2='80' y2='40'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 100px 100px;
+            background-attachment: fixed;
+        }
+
+        /* Layer 4: Fine diagonal lattice */
+        #bg-lattice {
+            position: fixed; inset: 0; z-index: -7; pointer-events: none;
+            background-image:
+                linear-gradient(45deg, rgba(201,168,76,0.04) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-attachment: fixed;
+        }
+
+        /* Layer 5: Edge vignette — deep shadow framing */
+        #bg-vignette {
+            position: fixed; inset: 0; z-index: -6; pointer-events: none;
+            background: radial-gradient(ellipse 70% 60% at center, transparent 30%, rgba(0,0,0,0.7) 100%);
+        }
+
+        /* Layer 6: Sweeping golden shimmer */
+        #bg-shimmer {
+            position: fixed; inset: 0; z-index: -5; pointer-events: none;
+            background: linear-gradient(105deg,
+                transparent 38%,
+                rgba(232,201,122,0.03) 44%,
+                rgba(232,201,122,0.09) 50%,
+                rgba(232,201,122,0.03) 56%,
+                transparent 62%);
+            background-size: 200% 100%;
+            animation: shimmerSweep 8s ease-in-out infinite;
+        }
+        @keyframes shimmerSweep {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -100% 0; }
+        }
+
+        /* Layer 7: Film grain texture */
+        #bg-grain {
+            position: fixed; inset: 0; z-index: -4; pointer-events: none;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+
+        /* Ambient particle canvas */
+        #particle-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -3; pointer-events: none; opacity: 0.7;
+        }
+
+        /* Golden border running along screen edges */
+        .edge-border {
+            position: fixed; z-index: 2; pointer-events: none;
+        }
+        .edge-border.top    { top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 5%, rgba(201,168,76,0.3) 30%, rgba(232,201,122,0.5) 50%, rgba(201,168,76,0.3) 70%, transparent 95%); }
+        .edge-border.bottom { bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 5%, rgba(201,168,76,0.3) 30%, rgba(232,201,122,0.5) 50%, rgba(201,168,76,0.3) 70%, transparent 95%); }
+        .edge-border.left   { top: 0; left: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent 5%, rgba(201,168,76,0.25) 30%, rgba(232,201,122,0.4) 50%, rgba(201,168,76,0.25) 70%, transparent 95%); }
+        .edge-border.right  { top: 0; right: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent 5%, rgba(201,168,76,0.25) 30%, rgba(232,201,122,0.4) 50%, rgba(201,168,76,0.25) 70%, transparent 95%); }
+
+        /* Corner ornaments */
+        .corner-ornament {
+            position: fixed; width: 140px; height: 140px;
+            pointer-events: none; z-index: 3; opacity: 0.25;
+        }
+        .corner-ornament.tl { top: 8px; left: 8px; }
+        .corner-ornament.tr { top: 8px; right: 8px; transform: scaleX(-1); }
+        .corner-ornament.bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+        .corner-ornament.br { bottom: 8px; right: 8px; transform: scale(-1,-1); }
+
+        /* Section glass-card panels */
+        .glass-panel {
+            background: linear-gradient(160deg,
+                rgba(13,59,46,0.35) 0%,
+                rgba(8,8,8,0.6) 50%,
+                rgba(13,59,46,0.25) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(201,168,76,0.15);
+        }
+
+        /* ═══════════════════════ ANIMATIONS ═══════════════════════ */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(45px);
+            transition: opacity 1.1s cubic-bezier(0.22,1,0.36,1),
+                        transform 1.1s cubic-bezier(0.22,1,0.36,1);
+        }
+        .reveal.fade-up    { transform: translateY(65px); }
+        .reveal.scale-up   { transform: scale(0.82); }
+        .reveal.slide-left { transform: translateX(-90px); }
+        .reveal.slide-right{ transform: translateX(90px); }
+        .reveal.fade-in    { transform: translateY(0); }
+        .reveal.zoom-in    { transform: scale(0.55); }
+        .invitation-opened .reveal.active { opacity: 1; transform: translate(0,0) scale(1); transition-delay: 0.8s; }
+
+        .reveal-stagger > * {
+            opacity: 0; transform: translateY(35px);
+            transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1),
+                        transform 0.9s cubic-bezier(0.22,1,0.36,1);
+        }
+        .invitation-opened .reveal-stagger.active > *:nth-child(1)  { opacity:1; transform:translateY(0); transition-delay:1s; }
+        .invitation-opened .reveal-stagger.active > *:nth-child(2)  { opacity:1; transform:translateY(0); transition-delay:1.15s; }
+        .invitation-opened .reveal-stagger.active > *:nth-child(3)  { opacity:1; transform:translateY(0); transition-delay:1.25s; }
+        .invitation-opened .reveal-stagger.active > *:nth-child(4)  { opacity:1; transform:translateY(0); transition-delay:1.35s; }
+        .invitation-opened .reveal-stagger.active > *:nth-child(5)  { opacity:1; transform:translateY(0); transition-delay:1.45s; }
+        .invitation-opened .reveal-stagger.active > *:nth-child(6)  { opacity:1; transform:translateY(0); transition-delay:1.55s; }
+        .invitation-opened .reveal-stagger.active > *:nth-child(7)  { opacity:1; transform:translateY(0); transition-delay:1.65s; }
+        .invitation-opened .reveal-stagger.active > *:nth-child(8)  { opacity:1; transform:translateY(0); transition-delay:1.75s; }
+        .invitation-opened .reveal-stagger.active > *:nth-child(9)  { opacity:1; transform:translateY(0); transition-delay:1.85s; }
+        .invitation-opened .reveal-stagger.active > *:nth-child(10) { opacity:1; transform:translateY(0); transition-delay:1.95s; }
+        .invitation-opened .reveal-stagger.active > *:nth-child(n+11) { opacity:1; transform:translateY(0); transition-delay:2.05s; }
+
+        /* Hero letter-by-letter */
+        .hero-title { line-height: 1.08; perspective: 600px; }
+        .hero-title .letter {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(35px) rotateX(-50deg);
+            background: linear-gradient(180deg, #fff 0%, #E8C97A 30%, #C9A84C 60%, #8B6914 100%);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.7));
+        }
+        .invitation-opened .hero-title .letter {
+            animation: letterReveal 1s cubic-bezier(0.22,1,0.36,1) forwards;
+        }
+        @keyframes letterReveal {
+            0%   { opacity:0; transform:translateY(50px) rotateX(-70deg) scale(0.5); filter:blur(8px) drop-shadow(0 4px 8px rgba(0,0,0,0.7)); }
+            55%  { opacity:1; transform:translateY(-6px) rotateX(6deg) scale(1.06); filter:blur(0) drop-shadow(0 8px 16px rgba(201,168,76,0.5)); }
+            100% { opacity:1; transform:translateY(0) rotateX(0) scale(1); filter:blur(0) drop-shadow(0 4px 8px rgba(0,0,0,0.7)); }
+        }
+
+        .hero-flourish {
+            width: 0; height: 2px; margin: 22px auto 0;
+            background: linear-gradient(90deg, transparent, #8B6914, #C9A84C, #E8C97A, #C9A84C, #8B6914, transparent);
+        }
+        .invitation-opened .hero-flourish {
+            animation: flourishExpand 1.6s ease 2.8s forwards;
+        }
+        @keyframes flourishExpand { to { width: 360px; max-width: 85%; } }
+
+        .hero-subtitle {
+            opacity: 0; transform: translateY(22px);
+        }
+        .invitation-opened .hero-subtitle {
+            animation: heroSubIn 1.3s ease 3.2s forwards;
+        }
+        @keyframes heroSubIn { to { opacity:1; transform:translateY(0); } }
+
+        .invitation-opened .bismillah-glow { animation: bismGlow 4.5s ease-in-out infinite; }
+        @keyframes bismGlow {
+            0%,100% { text-shadow: 0 0 12px rgba(232,201,122,0.2), 0 0 24px rgba(201,168,76,0.1); }
+            50%     { text-shadow: 0 0 24px rgba(232,201,122,0.5), 0 0 48px rgba(201,168,76,0.25); }
+        }
+
+        /* Section decorative line */
+        .section-line {
+            width: 100px; height: 1px; margin: 16px auto 0;
+            background: linear-gradient(90deg, transparent, #8B6914, #C9A84C, #E8C97A, #C9A84C, #8B6914, transparent);
+            position: relative;
+        }
+        .section-line::after {
+            content: '✦'; position: absolute; left: 50%; top: 50%;
+            transform: translate(-50%,-50%); color: #E8C97A;
+            font-size: 12px; background: transparent; padding: 0 10px;
+            text-shadow: 0 0 10px rgba(232,201,122,0.5);
+        }
+
+        /* Double-border photo frame */
+        .photo-frame {
+            position: relative;
+            border: 3px solid var(--gold);
+            padding: 6px;
+            background: rgba(8,8,8,0.8);
+            box-shadow:
+                0 0 0 1px rgba(139,105,20,0.3),
+                0 0 0 8px rgba(13,59,46,0.5),
+                0 0 0 9px rgba(201,168,76,0.2),
+                0 20px 60px rgba(0,0,0,0.6);
+        }
+        .photo-frame img { border: 1px solid rgba(139,105,20,0.3); display: block; }
+
+        /* Wedding card hover */
+        .wedding-card {
+            position: relative; overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.22,1,0.36,1),
+                        box-shadow 0.4s cubic-bezier(0.22,1,0.36,1);
+        }
+        .wedding-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5), 0 0 40px rgba(201,168,76,0.08);
+        }
+        .wedding-card::after {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(110deg, transparent 20%, rgba(232,201,122,0.1) 50%, transparent 80%);
+            transition: left 0.8s ease; pointer-events: none;
+        }
+        .wedding-card:hover::after { left: 150%; }
+
+        /* Ceremony deck */
+        .ceremony-deck {
+            background: linear-gradient(155deg, rgba(13,59,46,0.5), rgba(8,8,8,0.7));
+            border: 1px solid rgba(201,168,76,0.2);
+            position: relative; overflow: hidden;
+        }
+        .ceremony-deck::before {
+            content: ''; position: absolute; top: 0; right: 0;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Ceremony card centered layout */
+        .ceremony-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-align: center;
+        }
+        .ceremony-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-top: 22px;
+            text-align: center;
+        }
+
+        /* Groom card body centered */
+        .groom-body {
+            padding: 4px 28px 30px;
+            text-align: center;
+        }
+
+        /* Childhood paragraph centered */
+        .childhood-caption {
+            margin-top: 18px;
+            font-size: 17px;
+            line-height: 1.65;
+            color: rgba(250,243,224,0.8);
+            text-align: center;
+        }
+
+        /* Map button */
+        .map-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 22px; border: 1px solid var(--gold);
+            color: var(--gold); font-size: 13px; letter-spacing: 2px;
+            text-decoration: none; border-radius: 30px;
+            transition: all 0.35s ease; font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+        }
+        .map-btn:hover {
+            background: var(--gold); color: var(--black);
+            box-shadow: 0 0 20px rgba(201,168,76,0.3);
+        }
+        .map-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+        /* Floating audio */
+        .floating-audio {
+            position: fixed; bottom: 24px; right: 24px; z-index: 9000;
+            background: rgba(8,8,8,0.9); border: 1px solid rgba(201,168,76,0.4);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border-radius: 20px; padding: 12px 20px;
+            display: flex; align-items: center; gap: 14px;
+        }
+
+        .bismillah {
+            font-family: 'Amiri', serif;
+            font-size: 3rem; line-height: 1.25;
+            color: var(--gold2);
+            font-weight: 700;
+        }
+        .bismillah-translation {
+            font-size: 14px !important;
+            letter-spacing: 2px !important;
+            margin-top: 10px !important;
+        }
+        @media (max-width: 768px) {
+            .bismillah { font-size: 2.2rem; }
+            .bismillah-translation { font-size: 12px !important; }
+        }
+        @media (max-width: 480px) {
+            .bismillah { font-size: 1.8rem; }
+            .bismillah-translation { font-size: 11px !important; letter-spacing: 1.5px !important; }
+        }
+
+        /* ═══════ SCRATCH CARDS ═══════ */
+        .scratch-section {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+        .scratch-header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+        .scratch-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(160px, 200px));
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 32px;
+        }
+        .scratch-grid-grand {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* CIRCLE CARD */
+        .scratch-card {
+            position: relative;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            flex-shrink: 0;
+            text-align: center;
+            background: rgba(13,59,46,0.5);
+            border: 2px solid rgba(201,168,76,0.4);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 4px rgba(13,59,46,0.6), 0 0 0 6px rgba(201,168,76,0.15);
+        }
+        .scratch-card.grand {
+            width: 260px;
+            height: 260px;
+            overflow: hidden;
+            background: linear-gradient(145deg, rgba(201,168,76,0.15), rgba(13,59,46,0.6));
+            border: 3px solid rgba(232,201,122,0.6);
+            box-shadow:
+                0 0 0 5px rgba(13,59,46,0.7),
+                0 0 0 8px rgba(201,168,76,0.25),
+                0 20px 60px rgba(0,0,0,0.5),
+                0 0 60px rgba(201,168,76,0.2);
+        }
+
+        .scratch-result {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            padding: 22px 16px;
+        }
+        .scratch-label {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 9px;
+            color: rgba(201,168,76,0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .scratch-date {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gold2);
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+            text-shadow: 0 2px 8px rgba(201,168,76,0.4);
+        }
+        .scratch-card.grand .scratch-date {
+            font-size: 20px;
+            background: linear-gradient(180deg, #fff 0%, #E8C97A 40%, #C9A84C 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            filter: drop-shadow(0 2px 6px rgba(201,168,76,0.5));
+        }
+        .scratch-divider {
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent);
+            margin: 8px auto;
+        }
+        .scratch-card.grand .scratch-divider {
+            width: 60px;
+            background: linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent);
+        }
+        .scratch-description {
+            font-size: 11px;
+            line-height: 1.5;
+            color: rgba(250,243,224,0.8);
+            max-width: 160px;
+            margin: 0 auto;
+        }
+        .scratch-card.grand .scratch-description {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gold2);
+            font-style: italic;
+            max-width: 210px;
+            line-height: 1.55;
+        }
+        .scratch-card.grand .scratch-result {
+            padding: 24px 20px;
+        }
+        /* Canvas wraps as circle */
+        .scratch-canvas-wrap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 2;
+            cursor: grab;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .scratch-canvas-wrap canvas {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .scratch-canvas-wrap:active { cursor: grabbing; }
+        .scratch-canvas-wrap.scratched {
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+            opacity: 0;
+        }
+        /* Labels below circles */
+        .scratch-outer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .scratch-sub-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: rgba(201,168,76,0.5);
+            text-transform: uppercase;
+        }
+        .scratch-hint {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: rgba(201,168,76,0.45);
+            letter-spacing: 2px;
+        }
+        .scratch-hint svg {
+            display: inline-block;
+            width: 14px; height: 14px;
+            vertical-align: middle;
+            margin-right: 5px;
+            fill: var(--gold);
+        }
+        @media (max-width: 600px) {
+            .scratch-card { width: 150px; height: 150px; }
+            .scratch-card.grand { width: 210px; height: 210px; }
+            .scratch-date { font-size: 12px; }
+            .scratch-card.grand .scratch-date { font-size: 15px; }
+            .scratch-description { font-size: 10px; }
+            .scratch-card.grand .scratch-description { font-size: 11px; max-width: 170px; }
+            .scratch-grid {
+                grid-template-columns: repeat(2, 150px);
+                gap: 16px;
+                margin-bottom: 24px;
+            }
+            .scratch-grid-grand { margin-top: 4px; }
+        }
+
+        /* Force center on all inputs, selects, buttons */
+        input, select, button, textarea {
+            text-align: center;
+        }
+        input::placeholder {
+            text-align: center;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           PREMIUM INTERACTIVE GLOW EFFECT
+           - Works on mouse hover (desktop/laptop/TV)
+           - Works on touch (mobile/tablet)
+           - GPU-accelerated for smooth performance on all devices
+           ═══════════════════════════════════════════════════════════ */
+        .gallery-item,
+        .glass-panel,
+        .wedding-card,
+        .ceremony-deck,
+        .countdown-box,
+        .scratch-card,
+        .photo-frame,
+        .guest-message-card,
+        .double-border,
+        .map-btn {
+            position: relative;
+            isolation: isolate;
+            transition: transform 0.4s cubic-bezier(0.22,1,0.36,1),
+                        box-shadow 0.5s cubic-bezier(0.22,1,0.36,1),
+                        border-color 0.4s ease;
+            will-change: transform;
+        }
+
+        /* The glow halo layer */
+        .gallery-item::before,
+        .glass-panel::before,
+        .wedding-card::before,
+        .ceremony-deck::after,
+        .countdown-box::after,
+        .scratch-card::before,
+        .photo-frame::before,
+        .guest-message-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: radial-gradient(
+                circle 220px at var(--mx, 50%) var(--my, 50%),
+                rgba(232, 201, 122, 0.35) 0%,
+                rgba(201, 168, 76, 0.15) 35%,
+                transparent 65%
+            );
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: -1;
+            mix-blend-mode: screen;
+        }
+
+        /* Activate glow on hover (desktop) and on .touched class (mobile) */
+        .gallery-item:hover::before,
+        .glass-panel:hover::before,
+        .wedding-card:hover::before,
+        .ceremony-deck:hover::after,
+        .countdown-box:hover::after,
+        .scratch-card:hover::before,
+        .photo-frame:hover::before,
+        .guest-message-card:hover::before,
+        .gallery-item.touched::before,
+        .glass-panel.touched::before,
+        .wedding-card.touched::before,
+        .ceremony-deck.touched::after,
+        .countdown-box.touched::after,
+        .scratch-card.touched::before,
+        .photo-frame.touched::before,
+        .guest-message-card.touched::before {
+            opacity: 1;
+        }
+
+        /* Border highlight on hover/touch */
+        .gallery-item:hover,
+        .glass-panel:hover,
+        .wedding-card:hover,
+        .ceremony-deck:hover,
+        .countdown-box:hover,
+        .scratch-card:hover,
+        .photo-frame:hover,
+        .guest-message-card:hover,
+        .double-border:hover,
+        .gallery-item.touched,
+        .glass-panel.touched,
+        .wedding-card.touched,
+        .ceremony-deck.touched,
+        .countdown-box.touched,
+        .scratch-card.touched,
+        .photo-frame.touched,
+        .guest-message-card.touched,
+        .double-border.touched {
+            border-color: rgba(232, 201, 122, 0.7) !important;
+            box-shadow: 
+                0 0 0 1px rgba(232, 201, 122, 0.35),
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(201, 168, 76, 0.25),
+                inset 0 0 30px rgba(232, 201, 122, 0.05) !important;
+        }
+
+        /* Ripple effect on tap (mobile-friendly) */
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(6);
+                opacity: 0;
+            }
+        }
+
+        .ripple-effect {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(232,201,122,0.7), rgba(201,168,76,0.3) 50%, transparent 70%);
+            transform: scale(0);
+            animation: ripple 0.9s ease-out;
+            pointer-events: none;
+            z-index: 10;
+            mix-blend-mode: screen;
+        }
+
+        /* Magnetic lift on hover/touch */
+        @media (hover: hover) and (pointer: fine) {
+            .gallery-item:hover,
+            .wedding-card:hover,
+            .countdown-box:hover,
+            .scratch-card:hover,
+            .glass-panel:hover {
+                transform: translateY(-6px) scale(1.015);
+            }
+        }
+        @media (hover: none) {
+            .gallery-item.touched,
+            .wedding-card.touched,
+            .countdown-box.touched,
+            .scratch-card.touched,
+            .glass-panel.touched {
+                transform: scale(1.02);
+            }
+        }
+
+        /* Map button — extra special glow */
+        .map-btn:hover, .map-btn.touched {
+            box-shadow: 0 0 20px rgba(232,201,122,0.5), 0 0 40px rgba(201,168,76,0.2) !important;
+            transform: scale(1.04);
+        }
+
+        /* ═══════ CLICK/PRESS EFFECT ═══════ */
+        .press-active {
+            transform: scale(0.94) translateY(2px) !important;
+            filter: brightness(0.8) contrast(1.1) !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4), inset 0 0 40px rgba(232,201,122,0.1) !important;
+            transition: transform 0.1s ease-out, filter 0.1s ease-out !important;
+        }
+        
+        .press-flash {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.15);
+            z-index: 20;
+            pointer-events: none;
+            border-radius: inherit;
+            animation: flashFade 0.4s ease-out forwards;
+        }
+
+        @keyframes flashFade {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* ═══════ MOON AND FALLING STARS ANIMATION ═══════ */
+        #celestial-container {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .falling-star {
+            position: absolute;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(201,168,76,0.8) 50%, rgba(232,201,122,1) 100%);
+            width: 1.5px;
+            height: 40px;
+            opacity: 0;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(110vh) translateX(20px); opacity: 0; }
+        }
+        
+        .moon {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            animation: moonFloat 8s ease-in-out infinite;
+            filter: drop-shadow(0 0 14px rgba(232,201,122,0.55)) drop-shadow(0 0 30px rgba(201,168,76,0.3));
+        }
+        .moon svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .hero-moon {
+            position: absolute;
+            right: 8%;
+            top: 14px;
+            width: 50px;
+            height: 50px;
+            pointer-events: none;
+            z-index: 2;
+        }
+        @keyframes moonFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
+        }
+        
+        /* ═══════ COUNTDOWN ═══════ */
+        .countdown-section {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+            text-align: center;
+        }
+        .countdown-header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+        .countdown-small {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 14px;
+            color: var(--gold);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+        .countdown-big {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 44px;
+            color: var(--cream);
+            margin-top: 6px;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .countdown-box {
+            background: linear-gradient(145deg, rgba(13,59,46,0.6), rgba(8,8,8,0.7));
+            border: 1px solid rgba(201,168,76,0.35);
+            border-radius: 16px;
+            padding: 22px 10px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 1px 0 rgba(232,201,122,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .countdown-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(110deg, transparent 20%, rgba(232,201,122,0.08) 50%, transparent 80%);
+            transition: left 1s ease;
+        }
+        .countdown-box:hover::before { left: 150%; }
+        .countdown-number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 40px;
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(180deg, #fff 0%, #E8C97A 50%, #C9A84C 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 6px rgba(201,168,76,0.3));
+        }
+        .countdown-label {
+            margin-top: 10px;
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: rgba(201,168,76,0.7);
+            text-transform: uppercase;
+        }
+        .countdown-hint {
+            margin-top: 28px;
+            font-size: 14px;
+            color: rgba(250,243,224,0.5);
+            letter-spacing: 2px;
+        }
+        .countdown-hint strong {
+            color: var(--gold2);
+            font-weight: 700;
+        }
+        /* Guest messages 3-column grid */
+        .guest-note {
+            margin: 0;
+            font-size: 13px;
+            color: var(--gold2);
+            letter-spacing: 0.5px;
+            padding: 8px 18px;
+            border: 1px dashed rgba(201,168,76,0.4);
+            border-radius: 30px;
+            background: rgba(201,168,76,0.08);
+            display: inline-block;
+        }
+
+        .guest-messages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            align-items: start;
+        }
+
+        .guest-messages-grid .guest-message-card {
+            max-width: 100% !important;
+        }
+
+        /* Tablet: keep 3 cols but tighter */
+        @media (max-width: 900px) {
+            .guest-messages-grid { gap: 12px; }
+            .guest-message-card { padding: 16px 10px !important; border-radius: 12px !important; }
+            .guest-message-card .message-text { font-size: 13px !important; margin: 8px 0 !important; line-height: 1.4 !important; }
+            .guest-message-card .quote-l { font-size: 20px !important; top: 4px !important; left: 6px !important; }
+            .guest-message-card .quote-r { font-size: 20px !important; right: 6px !important; }
+            .guest-message-card .avatar { width: 22px !important; height: 22px !important; font-size: 10px !important; }
+            .guest-message-card .guest-name-row { gap: 4px !important; }
+            .guest-message-card span { font-size: 10px !important; }
+            .message-divider { width: 40px !important; margin-bottom: 12px !important; }
+        }
+        /* Mobile: 2 messages per row */
+        @media (max-width: 600px) {
+            .guest-messages-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; padding: 0 8px !important; }
+            .guest-message-card { padding: 10px 6px !important; border-radius: 8px !important; }
+            .guest-message-card .message-text { font-size: 10px !important; line-height: 1.3 !important; margin: 6px 0 !important; letter-spacing: 0; word-wrap: break-word; }
+            .guest-message-card .avatar { width: 18px !important; height: 18px !important; font-size: 8px !important; }
+            .guest-message-card .guest-name-row { gap: 3px !important; flex-wrap: wrap; }
+            .guest-message-card span { font-size: 8px !important; }
+            .guest-message-card .quote-l { font-size: 14px !important; top: 2px !important; left: 3px !important; }
+            .guest-message-card .quote-r { font-size: 14px !important; right: 3px !important; bottom: 0 !important; }
+            .message-divider { width: 25px !important; margin-bottom: 6px !important; }
+        }
+        @media (max-width: 380px) {
+            .guest-messages-grid { gap: 6px !important; padding: 0 4px !important; }
+            .guest-message-card { padding: 8px 4px !important; }
+            .guest-message-card .message-text { font-size: 8px !important; line-height: 1.2 !important; }
+            .guest-message-card .avatar { width: 14px !important; height: 14px !important; font-size: 7px !important; }
+        }
+        @media (max-width: 600px) {
+            .countdown-big { font-size: 30px; }
+            .countdown-number { font-size: 28px; }
+            .countdown-box { padding: 16px 6px; }
+            .countdown-label { font-size: 10px; letter-spacing: 2px; }
+            .countdown-grid { gap: 10px; }
+        }
+
+        /* Gallery grid - clean normal 3x3 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .gallery-item {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+        }
+        .gallery-item:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(201,168,76,0.15);
+            z-index: 5;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        .gallery-item:hover img { transform: scale(1.06); }
+        .gallery-caption {
+            padding: 14px 12px;
+            background: rgba(8,8,8,0.85);
+            border-top: 1px solid rgba(201,168,76,0.2);
+            font-size: 12px;
+            color: rgba(250,243,224,0.8);
+            letter-spacing: 1.5px;
+            text-align: center;
+        }
+
+        /* Family section */
+        .family-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 64px !important; letter-spacing: 6px !important; }
+            .gallery-item img { height: 240px; }
+        }
+        @media (max-width: 768px) {
+            .hero-title { font-size: 52px !important; letter-spacing: 4px !important; }
+            .corner-ornament { width: 80px; height: 80px; }
+            .floating-audio { bottom: 12px; right: 12px; padding: 10px 14px; gap: 10px; }
+            .gallery-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 10px; }
+            .gallery-item img { height: 200px; }
+            .gallery-caption { font-size: 10px !important; padding: 10px 8px !important; }
+            .ceremony-deck { padding: 24px !important; }
+            .ceremony-header h3 { font-size: 24px !important; }
+            .ceremony-header p:first-child { font-size: 11px !important; }
+            section h2 { font-size: 36px !important; }
+            .family-section { padding: 0 16px 60px; }
+        }
+        @media (max-width: 640px) {
+            .hero-title { font-size: 44px !important; letter-spacing: 3px !important; }
+            .gallery-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 6px; }
+            .gallery-item img { height: 140px; }
+            .gallery-caption { font-size: 8px !important; padding: 6px !important; }
+            section { padding-left: 16px !important; padding-right: 16px !important; }
+        }
+        @media (max-width: 480px) {
+            .hero-title { font-size: 36px !important; letter-spacing: 2px !important; }
+            .corner-ornament { width: 60px; height: 60px; }
+            .floating-audio { bottom: 8px; right: 8px; padding: 8px 12px; gap: 8px; }
+            .floating-audio button { width: 32px !important; height: 32px !important; font-size: 12px !important; }
+            section h2 { font-size: 32px !important; }
+            .ceremony-deck h3 { font-size: 22px !important; }
+            .map-btn { font-size: 12px !important; padding: 8px 18px !important; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal-stagger > * { transition: none; opacity: 1; transform: none; }
+            .hero-title .letter { animation: none; opacity: 1; transform: none; }
+            #bg-shimmer { animation: none; }
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         ROYAL WELCOME GATE (SPLASH SCREEN)
+         ═══════════════════════════════════════════════════════════ -->
+    <div id="welcome-gate" style="position: fixed; inset: 0; z-index: 9999; background: #050505; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 1.2s cubic-bezier(0.7, 0, 0.3, 1); overflow: hidden;">
+        <!-- Floral Decorations -->
+        <div class="floral-corner tl" style="position: absolute; top: -10px; left: -10px; width: 280px; height: 280px; opacity: 0.6; pointer-events: none;">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,0 Q100,0 100,100 Q0,100 0,0" fill="none" stroke="var(--gold)" stroke-width="0.5" opacity="0.3"/>
+                <!-- Flower 1 -->
+                <circle cx="40" cy="40" r="15" fill="none" stroke="var(--gold2)" stroke-width="1" stroke-dasharray="2,2"/>
+                <path d="M40,20 Q45,35 60,40 Q45,45 40,60 Q35,45 20,40 Q35,35 40,20" fill="var(--gold2)" opacity="0.6"/>
+                <!-- Leaves -->
+                <path d="M40,40 L80,20 Q90,50 60,60" fill="var(--emerald)" opacity="0.4" stroke="var(--gold)" stroke-width="0.5"/>
+                <path d="M40,40 L20,80 Q50,90 60,60" fill="var(--emerald)" opacity="0.4" stroke="var(--gold)" stroke-width="0.5"/>
+                <!-- Accents -->
+                <circle cx="100" cy="100" r="3" fill="var(--gold)"/>
+                <path d="M40,40 L120,40" stroke="var(--gold)" stroke-width="0.5" stroke-dasharray="4,4"/>
+            </svg>
+        </div>
+        <div class="floral-corner tr" style="position: absolute; top: -10px; right: -10px; width: 280px; height: 280px; opacity: 0.6; transform: scaleX(-1); pointer-events: none;">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40,20 Q45,35 60,40 Q45,45 40,60 Q35,45 20,40 Q35,35 40,20" fill="var(--gold2)" opacity="0.6"/>
+                <path d="M40,40 L80,20 Q90,50 60,60" fill="var(--emerald)" opacity="0.4" stroke="var(--gold)" stroke-width="0.5"/>
+            </svg>
+        </div>
+        <div class="floral-corner bl" style="position: absolute; bottom: -10px; left: -10px; width: 280px; height: 280px; opacity: 0.6; transform: scaleY(-1); pointer-events: none;">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40,20 Q45,35 60,40 Q45,45 40,60 Q35,45 20,40 Q35,35 40,20" fill="var(--gold2)" opacity="0.6"/>
+                <path d="M40,40 L80,20 Q90,50 60,60" fill="var(--emerald)" opacity="0.4" stroke="var(--gold)" stroke-width="0.5"/>
+            </svg>
+        </div>
+        <div class="floral-corner br" style="position: absolute; bottom: -10px; right: -10px; width: 280px; height: 280px; opacity: 0.6; transform: scale(-1, -1); pointer-events: none;">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40,20 Q45,35 60,40 Q45,45 40,60 Q35,45 20,40 Q35,35 40,20" fill="var(--gold2)" opacity="0.6"/>
+                <path d="M40,40 L80,20 Q90,50 60,60" fill="var(--emerald)" opacity="0.4" stroke="var(--gold)" stroke-width="0.5"/>
+            </svg>
+        </div>
+
+        <!-- Backdrop layers -->
+        <div style="position: absolute; inset: 0; background: radial-gradient(circle at center, #0D3B2E 0%, #050505 80%); z-index: -1;"></div>
+        
+        <div id="welcome-stage" style="text-align: center; padding: 24px; position: relative; transition: transform 1.1s cubic-bezier(0.7,0,0.3,1), opacity 1.1s ease, filter 1.1s ease;">
+            <!-- Charminar Logo -->
+            <div id="charminar-logo-wrap" style="margin-bottom: 25px; animation: msgIn 1.8s ease both; position: relative; display: inline-block;">
+                <svg width="110" height="110" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 15px rgba(201,168,76,0.5));">
+                    <!-- Base Structure -->
+                    <path d="M25 100H95V105H25V100Z" fill="var(--gold3)"/>
+                    <path d="M30 100V45H90V100H30Z" fill="rgba(13,59,46,0.4)" stroke="var(--gold)" stroke-width="2"/>
+                    <path d="M30 55H90" stroke="var(--gold)" stroke-width="2"/>
+                    <!-- Main Arches -->
+                    <path d="M45 100V85C45 77 52 70 60 70C68 70 75 77 75 85V100" stroke="var(--gold2)" stroke-width="2.5"/>
+                    <!-- Balcony/Upper level -->
+                    <rect x="30" y="45" width="60" height="10" fill="var(--gold2)" opacity="0.8"/>
+                    <!-- Minarets (The 4 Pillars) -->
+                    <g fill="var(--gold)">
+                        <rect x="22" y="25" width="10" height="75" rx="2"/>
+                        <rect x="88" y="25" width="10" height="75" rx="2"/>
+                        <rect x="35" y="15" width="8" height="30" rx="1"/>
+                        <rect x="77" y="15" width="8" height="30" rx="1"/>
+                    </g>
+                    <!-- Domes -->
+                    <path d="M22 25C22 18 27 15 32 15V25H22Z" fill="var(--gold2)"/>
+                    <path d="M88 25C88 18 93 15 98 15V25H88Z" fill="var(--gold2)"/>
+                    <circle cx="39" cy="15" r="5" fill="var(--gold2)"/>
+                    <circle cx="81" cy="15" r="5" fill="var(--gold2)"/>
+                    <!-- Details -->
+                    <circle cx="60" cy="50" r="3" fill="var(--gold)"/>
+                </svg>
+                <span id="charminar-gate-anchor" aria-hidden="true" style="position:absolute; left:50%; top:73%; width:24px; height:30px; transform:translate(-50%,-50%); border-radius: 16px 16px 4px 4px; pointer-events:none;"></span>
+            </div>
+
+            <p class="cultural bismillah-glow" style="font-size: 2.5rem; color: var(--gold2); margin-bottom: 5px; animation: msgIn 1.5s ease both;">السَّلَامُ عَلَيْكُمْ</p>
+            <p class="heading" style="font-size: 1.1rem; color: var(--gold); letter-spacing: 4px; margin-bottom: 25px; animation: msgIn 1.5s ease 0.2s both;">As-salamu alaykum</p>
+            
+            <h1 class="heading" style="font-size: clamp(1.8rem, 8vw, 4.5rem); line-height: 1.1; font-weight: 900; background: linear-gradient(180deg, #FFFFFF 0%, #E8C97A 50%, #C9A84C 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.8)); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 4px; animation: msgIn 1.5s ease 0.4s both;">
+                Welcome to<br>Nizam's Family<br>Wedding Invitation
+            </h1>
+            
+            <div style="animation: msgIn 1.5s ease 0.6s both;">
+                <button onclick="unlockInvitation()" class="map-btn" style="padding: 18px 45px; font-size: 1.1rem; letter-spacing: 4px; border-width: 2px; background: rgba(201,168,76,0.1); backdrop-filter: blur(10px); cursor: pointer; border-radius: 50px; font-family: 'Cinzel Decorative', serif;">
+                    OPEN INVITATION
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Wrapped for Animation -->
+    <div id="main-content-wrapper" style="opacity: 0; transform: translateY(100px); transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1); visibility: hidden;">
+
+    <!-- ═══════ 7-LAYER BACKGROUND SYSTEM ═══════ -->
+    <div id="bg-base"></div>
+    <div id="bg-aurora"></div>
+    <div id="bg-pattern"></div>
+    <div id="bg-lattice"></div>
+    <div id="bg-vignette"></div>
+    <div id="bg-shimmer"></div>
+    <div id="bg-grain"></div>
+    <canvas id="particle-canvas"></canvas>
+    
+    <!-- ═══════ MOON AND FALLING STARS ANIMATION ═══════ -->
+    <div id="celestial-container">
+        <svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <radialGradient id="mg" cx="35%" cy="35%" r="65%">
+                    <stop offset="0%" stop-color="#FAF0C0"/>
+                    <stop offset="55%" stop-color="#E8C97A"/>
+                    <stop offset="100%" stop-color="#9B7A1E"/>
+                </radialGradient>
+                <mask id="crescentMask">
+                    <rect width="70" height="70" fill="black"/>
+                    <circle cx="35" cy="35" r="28" fill="white"/>
+                    <circle cx="48" cy="32" r="26" fill="black"/>
+                </mask>
+            </defs>
+            <circle cx="35" cy="35" r="30" fill="url(#mg)" mask="url(#crescentMask)"/>
+        </svg>
+        </div>
+
+    <!-- Golden edge borders -->
+    <div class="edge-border top"></div>
+    <div class="edge-border bottom"></div>
+    <div class="edge-border left"></div>
+    <div class="edge-border right"></div>
+
+    <!-- Corner ornaments -->
+    <svg class="corner-ornament tl" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 70 Q5 5 70 5" stroke="#C9A84C" stroke-width="1"/>
+        <path d="M12 90 Q12 12 90 12" stroke="#C9A84C" stroke-width="0.8"/>
+        <path d="M20 110 Q20 20 110 20" stroke="#C9A84C" stroke-width="0.6"/>
+        <circle cx="70" cy="5" r="2.5" fill="#C9A84C"/>
+        <circle cx="5" cy="70" r="2.5" fill="#C9A84C"/>
+        <path d="M45 5 Q45 30 25 45 Q10 58 5 45" stroke="#C9A84C" stroke-width="0.6"/>
+        <path d="M5 45 Q28 38 35 15" stroke="#C9A84C" stroke-width="0.6"/>
+        <circle cx="25" cy="25" r="1.5" fill="#C9A84C" opacity="0.6"/>
+    </svg>
+    <svg class="corner-ornament tr" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 70 Q5 5 70 5" stroke="#C9A84C" stroke-width="1"/>
+        <path d="M12 90 Q12 12 90 12" stroke="#C9A84C" stroke-width="0.8"/>
+        <path d="M20 110 Q20 20 110 20" stroke="#C9A84C" stroke-width="0.6"/>
+        <circle cx="70" cy="5" r="2.5" fill="#C9A84C"/>
+        <circle cx="5" cy="70" r="2.5" fill="#C9A84C"/>
+        <path d="M45 5 Q45 30 25 45 Q10 58 5 45" stroke="#C9A84C" stroke-width="0.6"/>
+        <circle cx="25" cy="25" r="1.5" fill="#C9A84C" opacity="0.6"/>
+    </svg>
+    <svg class="corner-ornament bl" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 70 Q5 5 70 5" stroke="#C9A84C" stroke-width="1"/>
+        <path d="M12 90 Q12 12 90 12" stroke="#C9A84C" stroke-width="0.8"/>
+        <path d="M20 110 Q20 20 110 20" stroke="#C9A84C" stroke-width="0.6"/>
+        <circle cx="70" cy="5" r="2.5" fill="#C9A84C"/>
+        <circle cx="5" cy="70" r="2.5" fill="#C9A84C"/>
+    </svg>
+    <svg class="corner-ornament br" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 70 Q5 5 70 5" stroke="#C9A84C" stroke-width="1"/>
+        <path d="M12 90 Q12 12 90 12" stroke="#C9A84C" stroke-width="0.8"/>
+        <path d="M20 110 Q20 20 110 20" stroke="#C9A84C" stroke-width="0.6"/>
+        <circle cx="70" cy="5" r="2.5" fill="#C9A84C"/>
+        <circle cx="5" cy="70" r="2.5" fill="#C9A84C"/>
+    </svg>
+
+
+    <!-- ═══════ BISMILLAH ═══════ -->
+    <section class="reveal fade-in pt-10 pb-5 px-6 text-center" style="border-bottom: 1px solid rgba(201,168,76,0.15);">
+        <div style="max-width: 600px; margin: 0 auto;">
+            <p class="bismillah tracking-wider bismillah-glow">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+            <p class="bismillah-translation" style="font-size: 14px; letter-spacing: 2px; color: rgba(201,168,76,0.55); margin-top: 10px;">In the name of Allah, the Most Gracious, the Most Merciful</p>
+        </div>
+    </section>
+
+
+    <!-- ═══════ HERO ═══════ -->
+    <section style="padding: 70px 24px 60px; text-align: center;">
+        <div style="max-width: 900px; margin: 0 auto; position: relative;">
+            <div class="moon hero-moon" aria-hidden="true">
+                <svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="heroMoonGrad" cx="35%" cy="35%" r="65%">
+                            <stop offset="0%" stop-color="#FAF0C0"/>
+                            <stop offset="55%" stop-color="#E8C97A"/>
+                            <stop offset="100%" stop-color="#9B7A1E"/>
+                        </radialGradient>
+                        <mask id="heroCrescentMask">
+                            <rect width="70" height="70" fill="black"/>
+                            <circle cx="35" cy="35" r="28" fill="white"/>
+                            <circle cx="48" cy="32" r="26" fill="black"/>
+                        </mask>
+                    </defs>
+                    <circle cx="35" cy="35" r="30" fill="url(#heroMoonGrad)" mask="url(#heroCrescentMask)"/>
+                </svg>
+            </div>
+            <h1 class="hero-title heading" style="font-size: 88px; letter-spacing: 8px; font-weight: 900;">
+                <span>
+                    <span class="letter" style="animation-delay:0.15s">N</span><span class="letter" style="animation-delay:0.28s">I</span><span class="letter" style="animation-delay:0.41s">Z</span><span class="letter" style="animation-delay:0.54s">A</span><span class="letter" style="animation-delay:0.67s">M</span>
+                </span><br>
+                <span>
+                    <span class="letter" style="animation-delay:0.95s">F</span><span class="letter" style="animation-delay:1.08s">A</span><span class="letter" style="animation-delay:1.21s">M</span><span class="letter" style="animation-delay:1.34s">I</span><span class="letter" style="animation-delay:1.47s">L</span><span class="letter" style="animation-delay:1.60s">Y</span>
+                </span><br>
+                <span>
+                    <span class="letter" style="animation-delay:1.85s">W</span><span class="letter" style="animation-delay:1.98s">E</span><span class="letter" style="animation-delay:2.11s">D</span><span class="letter" style="animation-delay:2.24s">D</span><span class="letter" style="animation-delay:2.37s">I</span><span class="letter" style="animation-delay:2.50s">N</span><span class="letter" style="animation-delay:2.63s">G</span>
+                </span>
+            </h1>
+            <div class="hero-flourish"></div>
+            <div class="hero-subtitle" style="margin-top: 32px;">
+                <p style="font-size: 20px; color: var(--gold2); letter-spacing: 2px;">Hosted with love & blessings by</p>
+                <p style="font-size: 30px; font-weight: 700; letter-spacing: 1px; margin-top: 4px; color: var(--cream);">Mr. & Mrs. Mohammed Zia Uddin</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════ SACRED ROOTS — SINGLE ELDERS TRIBUTE ═══════ -->
+    <section style="max-width: 720px; margin: 0 auto; padding: 20px 24px 80px;">
+        <div class="reveal fade-up text-center" style="margin-bottom: 36px;">
+            <p class="heading" style="font-size: 16px; color: var(--gold); letter-spacing: 5px;">SACRED ROOTS</p>
+            <h2 class="heading" style="font-size: 42px; margin-top: 4px;">Elders' Tribute</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="reveal scale-up">
+            <div class="glass-panel" style="border-radius: 24px; overflow: hidden;">
+                <div class="photo-frame" style="margin: 20px; border-radius: 16px; overflow: hidden;">
+                    <img src="GRANDPARENTS.jpeg" alt="Late Mrs & Mr Mohammed Nizam Uddin" style="width: 100%; height: 380px; object-fit: cover; border-radius: 12px;">
+                </div>
+                <div style="padding: 8px 32px 36px; text-align: center;">
+                    <p class="cultural" style="font-size: 14px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase;">In Loving Memory</p>
+                    <h3 class="heading" style="font-size: 28px; color: var(--gold2); margin-top: 6px;">Late Mrs & Mr Mohammed Nizam Uddin</h3>
+                    <p style="margin-top: 14px; font-size: 16px; line-height: 1.7; color: rgba(250,243,224,0.75); max-width: 500px; margin-left: auto; margin-right: auto;">
+                        The pillars of our family whose faith, love, and wisdom laid the sacred foundation upon which this joyous occasion stands. Their blessings guide us from above.
+                    </p>
+                    <div style="display: flex; align-items: center; gap: 14px; justify-content: center; margin-top: 20px;">
+                        <div style="height: 1px; width: 60px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4));"></div>
+                        <span style="font-size: 11px; letter-spacing: 3px; color: rgba(201,168,76,0.6);">MAY ALLAH GRANT THEM JANNAH</span>
+                        <div style="height: 1px; width: 60px; background: linear-gradient(270deg, transparent, rgba(201,168,76,0.4));"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════ SAVE THE DATE — SCRATCH CARDS ═══════ -->
+    <section class="scratch-section">
+        <div class="reveal fade-up scratch-header">
+            <p class="heading" style="font-size: 14px; color: var(--gold); letter-spacing: 5px;">SAVE THE DATE</p>
+            <h2 class="heading" style="font-size: 38px; margin-top: 4px;">Scratch to Reveal</h2>
+            <div class="section-line"></div>
+            <p class="scratch-hint" style="margin-top: 18px;">
+                <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                Scratch each circle with your finger or mouse to reveal
+            </p>
+        </div>
+
+        <!-- Row 1: Two small circles -->
+        <div class="reveal-stagger scratch-grid">
+
+            <!-- Scratch Card 1 -->
+            <div class="scratch-outer">
+                <div class="scratch-card" data-scratch="1">
+                    <div class="scratch-result">
+                        <div class="scratch-label">Save The Date</div>
+                        <div class="scratch-date">18th December<br>2026</div>
+                        <div class="scratch-divider"></div>
+                        <p class="scratch-description">Nikah of Mohammed Zameer Uddin with the daughter of Ghouse Sahab</p>
+                    </div>
+                </div>
+                <span class="scratch-sub-label">Nikah · Dec 18</span>
+            </div>
+
+            <!-- Scratch Card 2 -->
+            <div class="scratch-outer">
+                <div class="scratch-card" data-scratch="2">
+                    <div class="scratch-result">
+                        <div class="scratch-label">Save The Date</div>
+                        <div class="scratch-date">21st December<br>2026</div>
+                        <div class="scratch-divider"></div>
+                        <p class="scratch-description">Nikah of our beloved son Mohammed Zubair Uddin with the daughter of Mohammed Arif Uddin</p>
+                    </div>
+                </div>
+                <span class="scratch-sub-label">Nikah · Dec 21</span>
+            </div>
+
+        </div>
+
+        <!-- Row 2: Grand circle -->
+        <div class="reveal zoom-in scratch-grid-grand">
+            <div class="scratch-outer">
+                <div class="scratch-card grand" data-scratch="3">
+                    <div class="scratch-result">
+                        <div class="scratch-date">23rd December<br>2026</div>
+                        <div class="scratch-divider"></div>
+                        <p class="scratch-description">Grand Valima of our beloved sons Mohammed Zameer Uddin &amp; Mohammed Zubair Uddin</p>
+                    </div>
+                </div>
+                <span class="scratch-sub-label" style="color: var(--gold); letter-spacing: 3px;">✦ Grand Valima · Dec 23 ✦</span>
+            </div>
+        </div>
+
+        <p class="scratch-hint" style="margin-top: 24px;">Double-tap a circle to instantly reveal</p>
+    </section>
+
+
+    <!-- ═══════ COUNTDOWN — COUNTING THE MOMENTS ═══════ -->
+    <section class="countdown-section reveal fade-up">
+        <div class="countdown-header">
+            <p class="countdown-small">Counting the Moments</p>
+            <h2 class="countdown-big">Until Our Day</h2>
+            <div class="section-line"></div>
+            <p class="scratch-hint" style="margin-top: 18px;">Await the blessed union on 18th December 2026</p>
+        </div>
+
+        <div class="countdown-grid">
+            <div class="countdown-box">
+                <div class="countdown-number" id="cd-days">00</div>
+                <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-number" id="cd-hours">00</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-number" id="cd-mins">00</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-number" id="cd-secs">00</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+
+        <p class="countdown-hint">Target date: <strong>18th December 2026</strong></p>
+    </section>
+
+
+    <!-- ═══════ OUR FAMILY — TRIBUTE SECTION ═══════ -->
+    <section class="family-section">
+        <div class="reveal fade-up" style="text-align: center; margin-bottom: 36px;">
+            <p class="heading" style="font-size: 16px; color: var(--gold); letter-spacing: 5px;">OUR FAMILY</p>
+            <h2 class="heading" style="font-size: 42px; margin-top: 4px;">Bonds of Love</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="reveal scale-up glass-panel" style="border-radius: 24px; overflow: hidden; text-align: center;">
+            <div class="photo-frame" style="margin: 24px; border-radius: 16px; overflow: hidden;">
+                    <img src="FAMILY.jpeg" alt="Our Family" style="width: 100%; height: 440px; object-fit: cover; border-radius: 12px;">
+            </div>
+            <div style="padding: 4px 32px 40px;">
+                <p class="cultural" style="font-size: 14px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase;">The Nizam Family</p>
+                <h3 class="heading" style="font-size: 28px; color: var(--gold2); margin-top: 8px;">A Legacy of Faith & Togetherness</h3>
+                <p style="margin-top: 16px; font-size: 17px; line-height: 1.75; color: rgba(250,243,224,0.78); max-width: 560px; margin-left: auto; margin-right: auto;">
+                    Bound together by unwavering faith, shared laughter, and the warmth of countless memories — our family is a tapestry of love woven across generations. Every gathering strengthens the threads that make us who we are.
+                </p>
+                <div style="display: flex; align-items: center; gap: 14px; justify-content: center; margin-top: 22px;">
+                    <div style="height: 1px; width: 60px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4));"></div>
+                    <span style="font-size: 11px; letter-spacing: 3px; color: rgba(201,168,76,0.6);">UNITED IN LOVE & PRAYER</span>
+                    <div style="height: 1px; width: 60px; background: linear-gradient(270deg, transparent, rgba(201,168,76,0.4));"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════ CHILDHOOD MEMORIES — 2 PHOTO CARDS ═══════ -->
+    <section style="max-width: 900px; margin: 0 auto; padding: 0 24px 80px;">
+        <div class="reveal fade-up text-center" style="margin-bottom: 40px;">
+            <p class="heading" style="font-size: 16px; color: var(--gold); letter-spacing: 5px;">CHILDHOOD MEMORIES</p>
+            <h2 class="heading" style="font-size: 42px; margin-top: 4px;">Our Journey Together</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="reveal-stagger" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+            <!-- Photo 1 -->
+            <div>
+                <div class="photo-frame" style="border-radius: 16px; overflow: hidden;">
+                    <img src="PHOTO1.jpeg" alt="Childhood memories" style="width: 100%; height: 320px; object-fit: cover; border-radius: 12px;">
+                </div>
+                <p class="childhood-caption">
+                    Growing up together in the vibrant lanes of Hyderabad, every shared moment became a cherished memory woven into the fabric of our family.
+                </p>
+            </div>
+            <!-- Photo 2 -->
+            <div>
+                <div class="photo-frame" style="border-radius: 16px; overflow: hidden;">
+                    <img src="PHOTO2.jpeg" alt="Brothers together" style="width: 100%; height: 320px; object-fit: cover; border-radius: 12px;">
+                </div>
+                <p class="childhood-caption">
+                    From playful childhood days to standing tall as young men, their bond of brotherhood is the heartbeat of the Nizam family.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════ DUAL GROOM SHOWCASE ═══════ -->
+    <section style="max-width: 1050px; margin: 0 auto; padding: 0 24px 80px;">
+        <div class="reveal scale-up text-center" style="margin-bottom: 40px;">
+            <p class="heading" style="font-size: 16px; color: var(--gold); letter-spacing: 5px;">THE GENTLEMEN</p>
+            <h2 class="heading" style="font-size: 42px; margin-top: 4px;">Our Beloved Grooms</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+            <!-- Groom 1 -->
+            <div class="reveal slide-left wedding-card glass-panel" style="border-radius: 24px;">
+                <div class="photo-frame" style="margin: 18px; border-radius: 14px; overflow: hidden;">
+                    <img src="GROOM1.jpeg" alt="Mohammed Zameer Uddin" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
+                </div>
+                <div class="groom-body">
+                    <h3 class="heading" style="font-size: 26px; color: var(--cream);">Mohammed Zameer Uddin</h3>
+                    <p style="color: var(--gold); font-size: 15px; margin-top: 2px;">The Elder Son</p>
+                    <p style="margin-top: 12px; font-size: 15px; line-height: 1.65; color: rgba(250,243,224,0.7);">
+                        A man of quiet strength, deep faith and unwavering commitment to family. Zameer carries forward the legacy of his forefathers with grace and humility.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Groom 2 -->
+            <div class="reveal slide-right wedding-card glass-panel" style="border-radius: 24px;">
+                <div class="photo-frame" style="margin: 18px; border-radius: 14px; overflow: hidden;">
+                    <img src="GROOM2.jpeg" alt="Mohammed Zubair Uddin" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
+                </div>
+                <div class="groom-body">
+                    <h3 class="heading" style="font-size: 26px; color: var(--cream);">Mohammed Zubair Uddin</h3>
+                    <p style="color: var(--gold); font-size: 15px; margin-top: 2px;">The Younger Son</p>
+                    <p style="margin-top: 12px; font-size: 15px; line-height: 1.65; color: rgba(250,243,224,0.7);">
+                        With a warm heart and vibrant spirit, Zubair brings joy and laughter to every gathering. His kindness mirrors the teachings of our beloved elders.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════ CEREMONIES ═══════ -->
+    <section style="max-width: 1050px; margin: 0 auto; padding: 0 24px 80px;">
+        <div class="reveal fade-up text-center" style="margin-bottom: 40px;">
+            <p class="heading" style="font-size: 16px; color: var(--gold); letter-spacing: 5px;">THE CELEBRATIONS</p>
+            <h2 class="heading" style="font-size: 42px; margin-top: 4px;">Sacred Ceremonies</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 28px;">
+            <!-- Nikah 1 -->
+            <div class="reveal slide-left ceremony-deck" style="padding: 32px; border-radius: 24px;">
+                <div class="ceremony-header">
+                    <p style="font-size: 12px; letter-spacing: 3px; color: var(--gold2); text-transform: uppercase;">Nikah Ceremony</p>
+                    <h3 style="font-size: 28px; font-weight: 700; margin-top: 2px;">Lakshma Reddy Gardens</h3>
+                    <p style="font-size: 26px; color: var(--gold); font-weight: 700; margin-top: 4px;">DEC 18</p>
+                    <p style="font-size: 14px; color: rgba(250,243,224,0.6);">5:30 PM</p>
+                </div>
+                <p style="margin-top: 16px; font-size: 17px; color: var(--gold2); line-height: 1.6; font-style: italic; font-weight: 600; padding: 12px 0; border-top: 1px solid rgba(201,168,76,0.15); border-bottom: 1px solid rgba(201,168,76,0.15);">
+                    Mohammed Zameer Uddin weds his beloved bride in the sacred presence of close family and friends.
+                </p>
+                <div class="ceremony-footer">
+                    <span style="font-size: 12px; padding: 6px 16px; border: 1px solid rgba(201,168,76,0.2); border-radius: 20px; color: rgba(250,243,224,0.5);">Hyderabad • 18th December 2025</span>
+                    <a href="https://www.google.com/maps/search/Lakshma+Reddy+Gardens+Hyderabad" target="_blank" rel="noopener" class="map-btn">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+                        OPEN IN MAP
+                    </a>
+                </div>
+            </div>
+
+            <!-- Nikah 2 -->
+            <div class="reveal slide-right ceremony-deck" style="padding: 32px; border-radius: 24px;">
+                <div class="ceremony-header">
+                    <p style="font-size: 12px; letter-spacing: 3px; color: var(--gold2); text-transform: uppercase;">Nikah Ceremony</p>
+                    <h3 style="font-size: 28px; font-weight: 700; margin-top: 2px;">Minarva Gardens</h3>
+                    <p style="font-size: 26px; color: var(--gold); font-weight: 700; margin-top: 4px;">DEC 21</p>
+                    <p style="font-size: 14px; color: rgba(250,243,224,0.6);">6:00 PM</p>
+                </div>
+                <p style="margin-top: 16px; font-size: 17px; color: var(--gold2); line-height: 1.6; font-style: italic; font-weight: 600; padding: 12px 0; border-top: 1px solid rgba(201,168,76,0.15); border-bottom: 1px solid rgba(201,168,76,0.15);">
+                    Mohammed Zubair Uddin unites in holy matrimony in an intimate and elegant ceremony.
+                </p>
+                <div class="ceremony-footer">
+                    <span style="font-size: 12px; padding: 6px 16px; border: 1px solid rgba(201,168,76,0.2); border-radius: 20px; color: rgba(250,243,224,0.5);">Hyderabad • 21st December 2025</span>
+                    <a href="https://www.google.com/maps/search/Minarva+Gardens+Hyderabad" target="_blank" rel="noopener" class="map-btn">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+                        OPEN IN MAP
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Valima Reception — Full Width -->
+        <div style="max-width: 860px; margin: 0 auto;">
+            <div class="reveal zoom-in ceremony-deck text-center" style="padding: 48px 36px; border-radius: 24px; border-color: rgba(201,168,76,0.4);">
+                <p style="font-size: 12px; letter-spacing: 5px; color: var(--gold2); text-transform: uppercase; margin-bottom: 8px;">The Grand Joint Celebration</p>
+                <h3 class="heading" style="font-size: 52px; color: var(--gold);">Valima Reception</h3>
+                <div style="margin-top: 18px;">
+                    <p style="font-size: 26px; font-weight: 700;">23rd December 2025 • 7:30 PM</p>
+                    <p style="font-size: 20px; color: rgba(250,243,224,0.7); margin-top: 4px;">MNR Gardens, Champapet</p>
+                </div>
+                <p style="margin-top: 20px; font-size: 20px; max-width: 600px; margin-left: auto; margin-right: auto; color: var(--gold2); line-height: 1.65; font-style: italic; font-weight: 600; padding: 16px 20px; border: 2px solid rgba(201,168,76,0.3); border-radius: 16px; background: rgba(201,168,76,0.05);">
+                    Join us as we celebrate the joyous union of both brothers with family, friends and the entire community in a grand evening of feasting and festivity.
+                </p>
+                <div style="margin-top: 28px;">
+                    <a href="https://www.google.com/maps/search/MNR+Gardens+Champapet+Hyderabad" target="_blank" rel="noopener" class="map-btn" style="font-size: 15px; padding: 12px 32px;">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+                        OPEN IN MAP
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════ FAMILY GALLERY ═══════ -->
+    <section style="max-width: 1100px; margin: 0 auto; padding: 0 24px 100px;">
+        <div class="reveal fade-up" style="text-align: center; margin-bottom: 20px;">
+            <p class="heading" style="font-size: 16px; color: var(--gold); letter-spacing: 5px;">PRECIOUS MOMENTS</p>
+            <h2 class="heading" style="font-size: 42px; margin-top: 4px;">Family Gallery</h2>
+            <div class="section-line"></div>
+            <p style="margin-top: 20px; font-size: 17px; color: rgba(250,243,224,0.65); max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                A collection of cherished memories — moments of faith, family, and the beautiful journey that brought us here.
+            </p>
+        </div>
+
+        <div class="reveal-stagger gallery-grid">
+            <div class="gallery-item photo-frame" style="padding: 0; border-radius: 16px;">
+                <img src="GRANDPARENTS.jpeg" alt="Grandparents">
+                <div class="gallery-caption heading">Grandparents' Blessings</div>
+            </div>
+            <div class="gallery-item photo-frame" style="padding: 0; border-radius: 16px;">
+                <img src="PHOTO1.jpeg" alt="Childhood">
+                <div class="gallery-caption heading">Childhood Days</div>
+            </div>
+            <div class="gallery-item photo-frame" style="padding: 0; border-radius: 16px;">
+                <img src="PHOTO2.jpeg" alt="Brothers">
+                <div class="gallery-caption heading">Brothers Forever</div>
+            </div>
+            <div class="gallery-item photo-frame" style="padding: 0; border-radius: 16px;">
+                <img src="FAMILY.jpeg" alt="Family">
+                <div class="gallery-caption heading">The Nizam Family</div>
+            </div>
+            <div class="gallery-item photo-frame" style="padding: 0; border-radius: 16px;">
+                <img src="GROOM1.jpeg" alt="Zameer">
+                <div class="gallery-caption heading">Zameer Uddin</div>
+            </div>
+            <div class="gallery-item photo-frame" style="padding: 0; border-radius: 16px;">
+                <img src="GROOM2.jpeg" alt="Zubair">
+                <div class="gallery-caption heading">Zubair Uddin</div>
+            </div>
+            <div class="gallery-item photo-frame" style="padding: 0; border-radius: 16px;">
+                <img src="PHOTO3.jpeg" alt="Family Moments">
+                <div class="gallery-caption heading">Family Moments</div>
+            </div>
+            <div class="gallery-item photo-frame" style="padding: 0; border-radius: 16px;">
+                <img src="PHOTO4.jpeg" alt="Joyful Times">
+                <div class="gallery-caption heading">Joyful Times</div>
+            </div>
+            <div class="gallery-item photo-frame" style="padding: 0; border-radius: 16px;">
+                <img src="PHOTO5.jpeg" alt="Cherished Bonds">
+                <div class="gallery-caption heading">Cherished Bonds</div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════ RSVP ═══════ -->
+    <section style="max-width: 480px; margin: 0 auto; padding: 0 24px 100px;">
+        <div class="reveal scale-up glass-panel text-center" style="border-radius: 24px; padding: 36px 32px; border-color: rgba(201,168,76,0.3);">
+            <p class="heading" style="font-size: 13px; color: var(--gold); letter-spacing: 4px;">WITH JOY IN OUR HEARTS</p>
+            <h3 class="heading" style="font-size: 36px; margin-top: 4px; margin-bottom: 24px;">RSVP</h3>
+
+            <form id="rsvp-form" style="display: flex; flex-direction: column; gap: 14px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <input type="text" placeholder="Full Name" style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif;">
+                    <input type="tel" placeholder="Phone Number" style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif;">
+                </div>
+                <select style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif; width: 100%;">
+                    <option>Attending Nikah (Dec 18)</option>
+                    <option>Attending Nikah (Dec 21)</option>
+                    <option>Attending Valima (Dec 23)</option>
+                    <option selected>Attending All Events</option>
+                </select>
+                <button type="button" onclick="submitRSVP()" style="margin-top: 8px; width: 100%; padding: 16px; background: var(--gold); color: var(--black); font-weight: 700; font-size: 14px; letter-spacing: 3px; border: none; border-radius: 14px; cursor: pointer; font-family: 'Cormorant Garamond', serif; transition: all 0.3s ease;">
+                    ACCEPT WITH BLESSINGS
+                </button>
+            </form>
+        </div>
+    </section>
+
+
+    <!-- ═══════ GUEST MESSAGES ═══════ -->
+    <section style="max-width: 880px; margin: 0 auto; padding: 0 24px 100px;">
+        <div class="reveal fade-up" style="text-align: center; margin-bottom: 36px;">
+            <p class="heading" style="font-size: 14px; color: var(--gold); letter-spacing: 5px;">MESSAGES</p>
+            <h2 class="heading" style="font-size: 42px; margin-top: 4px;">Blessings for the Couple</h2>
+            <div class="section-line"></div>
+            <p style="margin-top: 18px; font-size: 15px; color: rgba(250,243,224,0.6);">
+                Write your experience of this web invite and share your blessings for the happy couple.
+            </p>
+        </div>
+
+        <div class="reveal scale-up glass-panel" style="border-radius: 24px; padding: 32px; text-align: center; margin-bottom: 50px;">
+            <p class="heading" style="font-size: 18px; color: var(--gold2); letter-spacing: 3px; margin-bottom: 20px;">✦ Write Your Message ✦</p>
+            <form id="guest-message-form" style="display: flex; flex-direction: column; gap: 14px; align-items: center;">
+                <input type="text" id="guest-name" maxlength="50" placeholder="Your Name" required
+                    style="width: 100%; max-width: 480px; background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 15px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif; transition: border-color 0.3s;"
+                    onfocus="this.style.borderColor='rgba(201,168,76,0.8)'" onblur="this.style.borderColor='rgba(201,168,76,0.3)'">
+                <textarea id="guest-message" maxlength="300" rows="4" placeholder="Write your experience and blessings..." required
+                    style="width: 100%; max-width: 480px; background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 15px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif; resize: vertical; transition: border-color 0.3s;"
+                    onfocus="this.style.borderColor='rgba(201,168,76,0.8)'" onblur="this.style.borderColor='rgba(201,168,76,0.3)'"></textarea>
+                <div style="width: 100%; max-width: 480px; display: flex; justify-content: flex-end; align-items: center; font-size: 12px; color: rgba(201,168,76,0.5);">
+                    <span id="char-count">0 / 300 characters</span>
+                </div>
+                <button type="submit"
+                    style="margin-top: 4px; width: 100%; max-width: 320px; padding: 14px; background: var(--gold); color: var(--black); font-weight: 700; font-size: 14px; letter-spacing: 3px; border: none; border-radius: 14px; cursor: pointer; font-family: 'Cormorant Garamond', serif; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(201,168,76,0.2);"
+                    onmouseover="this.style.background='var(--gold2)'; this.style.boxShadow='0 6px 20px rgba(201,168,76,0.35)'"
+                    onmouseout="this.style.background='var(--gold)'; this.style.boxShadow='0 4px 15px rgba(201,168,76,0.2)'">
+                    SHARE YOUR BLESSINGS ✦
+                </button>
+                <p class="guest-note">
+                    Your message will appear below as a guest tribute
+                </p>
+            </form>
+            <p style="margin-top: 14px; font-size: 13px; color: rgba(201,168,76,0.6);">
+                ⓘ Messages are stored locally on this device and synced across all visitors.
+            </p>
+        </div>
+
+        <!-- Messages display -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <p id="guest-messages-title" class="heading" style="font-size: 18px; color: var(--gold2); letter-spacing: 3px;">
+                ✦ Guest Messages ✦
+            </p>
+            <div class="section-line" style="margin-top: 10px;"></div>
+        </div>
+        <div id="guest-messages-list" class="guest-messages-grid">
+            <p id="no-messages" style="grid-column: 1 / -1; font-size: 15px; color: rgba(250,243,224,0.4); font-style: italic; padding: 40px; text-align: center;">
+                No blessings yet. Be the first to share your well-wishes!
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ═══════ FLOATING AUDIO ═══════ -->
+    <!-- 
+        TO ADD YOUR OWN AUDIO:
+        1. Keep your song file beside this HTML and name it "Jhilmil-Sitaron.mp3"
+           OR replace "Jhilmil-Sitaron.mp3" below with your audio file path
+        2. Supported formats: MP3, WAV, OGG
+        3. Example paths: "audio/nasheed.mp3" or "https://example.com/music.mp3"
+    -->
+    <audio id="wedding-audio" loop preload="auto">
+        <source src="Jhilmil Sitaron.mp3" type="audio/mpeg">
+        <!-- Fallback for other formats - uncomment and modify if needed -->
+        <!-- <source src="YOUR_AUDIO_FILE.ogg" type="audio/ogg"> -->
+        Your browser does not support the audio element.
+    </audio>
+    
+    <div class="floating-audio">
+        <button data-audio-control onclick="toggleAudio()" style="width: 38px; height: 38px; background: var(--gold); color: var(--black); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+            <span id="audio-icon">❚❚</span>
+        </button>
+        <div>
+            <div style="font-size: 12px; color: var(--gold); letter-spacing: 1px;">Jhilmil Sitaron</div>
+            <div id="audio-status" style="font-size: 10px; color: rgba(250,243,224,0.4);">Click to Play</div>
+        </div>
+        <div data-audio-control onclick="toggleAudio()" style="cursor: pointer;">
+            <div id="audio-pulse" style="width: 8px; height: 8px; background: var(--gold); border-radius: 50%; opacity: 1; animation: pulse 1.5s ease-in-out infinite;"></div>
+        </div>
+    </div>
+    <style>@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }</style>
+
+
+    <!-- ═══════ FIREWORKS OVERLAY ═══════ -->
+    <div id="fireworks-container" style="display:none; position:fixed; inset:0; z-index:100; background:rgba(0,0,0,0.92); align-items:center; justify-content:center;">
+        <canvas id="fireworks-canvas" style="position:absolute; inset:0; width:100%; height:100%;"></canvas>
+        <div style="position:relative; z-index:10; text-align:center;">
+            <div class="heading" style="font-size: 48px; color: var(--gold);">JazakAllah Khair!</div>
+            <p style="font-size: 20px; color: var(--cream); margin-top: 8px;">Thank you for your blessings</p>
+            <button onclick="closeFireworks()" style="margin-top: 32px; padding: 12px 36px; border: 1px solid var(--gold); background: none; color: var(--cream); font-size: 13px; letter-spacing: 2px; border-radius: 30px; cursor: pointer; font-family: 'Cormorant Garamond', serif; transition: background 0.3s;">CLOSE</button>
+        </div>
+    </div>
+    </div> <!-- Close main-content-wrapper -->
+
+
+    <script>
+    // ═══════════ AMBIENT PARTICLE SYSTEM ═══════════
+    (function(){
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let W, H, particles = [];
+
+        function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+        resize();
+        window.addEventListener('resize', resize);
+
+        for (let i = 0; i < 45; i++) {
+            particles.push({
+                x: Math.random() * W,
+                y: Math.random() * H,
+                r: Math.random() * 2.2 + 0.5,
+                dx: (Math.random() - 0.5) * 0.25,
+                dy: (Math.random() - 0.5) * 0.18,
+                o: Math.random() * 0.5 + 0.2,
+                pulse: Math.random() * Math.PI * 2
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+            for (const p of particles) {
+                p.pulse += 0.012;
+                const alpha = p.o + Math.sin(p.pulse) * 0.15;
+                ctx.globalAlpha = Math.max(0.08, Math.min(0.75, alpha));
+                // Gold glow
+                const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
+                grad.addColorStop(0, 'rgba(232,201,122,0.6)');
+                grad.addColorStop(0.5, 'rgba(201,168,76,0.15)');
+                grad.addColorStop(1, 'transparent');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2);
+                ctx.fill();
+                // Core dot
+                ctx.fillStyle = '#E8C97A';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+
+                p.x += p.dx;
+                p.y += p.dy;
+                if (p.x < -10) p.x = W + 10;
+                if (p.x > W + 10) p.x = -10;
+                if (p.y < -10) p.y = H + 10;
+                if (p.y > H + 10) p.y = -10;
+            }
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+
+    // ═══════════ AURORA MOUSE TRACKER ═══════════
+    (function(){
+        const aurora = document.getElementById('bg-aurora');
+        let ax = 30, ay = 25, bx = 70, by = 70;
+        let tx = 30, ty = 25;
+
+        document.addEventListener('mousemove', e => {
+            tx = (e.clientX / window.innerWidth) * 100;
+            ty = (e.clientY / window.innerHeight) * 100;
+        });
+
+        function animate() {
+            ax += (tx - ax) * 0.008;
+            ay += (ty - ay) * 0.008;
+            bx += ((100 - tx) - bx) * 0.006;
+            by += ((100 - ty) - by) * 0.006;
+            aurora.style.setProperty('--ax', ax + '%');
+            aurora.style.setProperty('--ay', ay + '%');
+            aurora.style.setProperty('--bx', bx + '%');
+            aurora.style.setProperty('--by', by + '%');
+            requestAnimationFrame(animate);
+        }
+        animate();
+    })();
+
+
+    // ═══════════ SCROLL REVEAL OBSERVER ═══════════
+    (function(){
+        const els = document.querySelectorAll('.reveal, .reveal-stagger');
+        if (!('IntersectionObserver' in window)) {
+            els.forEach(el => el.classList.add('active'));
+            return;
+        }
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('active'); obs.unobserve(e.target); }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+        
+        window.refreshReveals = () => {
+            els.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                // If invitation isn't opened, don't auto-activate
+                if (!document.body.classList.contains('invitation-opened')) {
+                    obs.observe(el);
+                    return;
+                }
+                
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
+                } else {
+                    obs.observe(el);
+                }
+            });
+        };
+        
+        window.refreshReveals();
+    })();
+
+
+    // ═══════════ MAIN-PAGE ONLY AUDIO PLAYER ═══════════
+    // Put your song file beside index.html and name it: Jhilmil-Sitaron.mp3
+    const audio = document.getElementById('wedding-audio');
+    const audioIcon = document.getElementById('audio-icon');
+    const audioPulse = document.getElementById('audio-pulse');
+    const audioStatus = document.getElementById('audio-status');
+    let isPlaying = false;
+    let musicStartedAfterInvitation = false;
+    let musicFadeTimer = null;
+
+    function fadeAudioTo(targetVolume, duration) {
+        if (!audio) return;
+        clearInterval(musicFadeTimer);
+        const start = audio.volume;
+        const startTime = performance.now();
+        musicFadeTimer = setInterval(() => {
+            const t = Math.min(1, (performance.now() - startTime) / duration);
+            const eased = 1 - Math.pow(1 - t, 3);
+            audio.volume = start + (targetVolume - start) * eased;
+            if (t >= 1) clearInterval(musicFadeTimer);
+        }, 32);
+    }
+
+    function updateAudioUI(playing) {
+        if (!audioIcon || !audioPulse) return;
+        if (playing) {
+            audioIcon.textContent = '❚❚';
+            audioPulse.style.animation = 'pulse 1.5s ease-in-out infinite';
+            audioPulse.style.opacity = '1';
+            if (audioStatus) audioStatus.textContent = 'Now Playing';
+            isPlaying = true;
+        } else {
+            audioIcon.textContent = '▶';
+            audioPulse.style.animation = 'none';
+            audioPulse.style.opacity = '0.4';
+            if (audioStatus) audioStatus.textContent = 'Paused';
+            isPlaying = false;
+        }
+    }
+
+    window.toggleAudio = function() {
+        if (!audio) return;
+        if (audio.paused) {
+            audio.muted = false;
+            audio.volume = 0.9;
+            audio.play().then(() => {
+                musicStartedAfterInvitation = true;
+                updateAudioUI(true);
+            }).catch(err => {
+                console.log('Audio play failed:', err);
+                if (audioStatus) audioStatus.textContent = 'Tap to Play';
+            });
+        } else {
+            audio.pause();
+            updateAudioUI(false);
+        }
+    };
+
+    window.primeInvitationMusic = function() {
+        if (!audio || musicStartedAfterInvitation) return;
+        audio.muted = false;
+        audio.volume = 0;
+        audio.play().then(() => {
+            musicStartedAfterInvitation = true;
+            updateAudioUI(true);
+            if (audioStatus) audioStatus.textContent = 'Opening...';
+        }).catch(err => {
+            console.log('Music prime blocked:', err);
+            updateAudioUI(false);
+            if (audioStatus) audioStatus.textContent = 'Tap to Play';
+        });
+    };
+
+    window.startInvitationMusic = function() {
+        if (!audio || musicStartedAfterInvitation) return;
+        audio.muted = false;
+        audio.volume = 0;
+        audio.play().then(() => {
+            musicStartedAfterInvitation = true;
+            updateAudioUI(true);
+            fadeAudioTo(0.9, 900);
+        }).catch(err => {
+            // This normally should not happen because it is called from OPEN INVITATION click.
+            console.log('Main-page music blocked:', err);
+            updateAudioUI(false);
+            if (audioStatus) audioStatus.textContent = 'Tap to Play';
+        });
+    };
+
+    window.fadeInInvitationMusic = function() {
+        if (!audio) return;
+        audio.muted = false;
+        if (audio.paused) {
+            window.startInvitationMusic();
+        } else {
+            updateAudioUI(true);
+            fadeAudioTo(0.9, 900);
+        }
+    };
+
+    if (audio) {
+        audio.addEventListener('play', () => updateAudioUI(true));
+        audio.addEventListener('pause', () => updateAudioUI(false));
+        audio.addEventListener('ended', () => {
+            if (!audio.loop) updateAudioUI(false);
+        });
+
+        // Initial idle state for floating control
+        audioIcon.textContent = '▶';
+        audioPulse.style.animation = 'none';
+        audioPulse.style.opacity = '0.4';
+        if (audioStatus) audioStatus.textContent = 'Click to Play';
+        isPlaying = false;
+    }
+
+
+    // ═══════════ RSVP → FIREWORKS ═══════════
+    function submitRSVP() {
+        const c = document.getElementById('fireworks-container');
+        c.style.display = 'flex';
+        launchFireworks();
+    }
+    function closeFireworks() {
+        document.getElementById('fireworks-container').style.display = 'none';
+        if (window._fwInt) clearInterval(window._fwInt);
+    }
+
+    function launchFireworks() {
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let sparks = [];
+        const colors = ['#C9A84C','#E8C97A','#FAF3E0','#8B6914','#FFFFFF','#1A5C45'];
+
+        function burst(x, y) {
+            for (let i = 0; i < 80; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 6 + 1.5;
+                sparks.push({
+                    x, y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    life: Math.random() * 60 + 50,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 3 + 1.5
+                });
+            }
+        }
+
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => burst(
+                Math.random() * canvas.width * 0.7 + canvas.width * 0.15,
+                Math.random() * canvas.height * 0.5 + 60
+            ), i * 200);
+        }
+
+        window._fwInt = setInterval(() => {
+            if (document.getElementById('fireworks-container').style.display !== 'none') {
+                burst(Math.random() * canvas.width, Math.random() * canvas.height * 0.6 + 40);
+            }
+        }, 700);
+
+        function animate() {
+            ctx.fillStyle = 'rgba(0,0,0,0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            for (let i = sparks.length - 1; i >= 0; i--) {
+                const s = sparks[i];
+                s.x += s.vx; s.y += s.vy; s.vy += 0.04; s.life--;
+                ctx.globalAlpha = Math.max(0, s.life / 70);
+                ctx.fillStyle = s.color;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                ctx.fill();
+                // Tail
+                ctx.globalAlpha = Math.max(0, s.life / 140);
+                ctx.beginPath();
+                ctx.arc(s.x - s.vx, s.y - s.vy, s.size * 0.6, 0, Math.PI * 2);
+                ctx.fill();
+                if (s.life <= 0) sparks.splice(i, 1);
+            }
+            ctx.globalAlpha = 1;
+            if (document.getElementById('fireworks-container').style.display !== 'none') {
+                requestAnimationFrame(animate);
+            }
+        }
+        animate();
+    }
+
+    // ═══════════ RESPONSIVE GRID FIX ═══════════
+    (function(){
+        function fixGrids() {
+            // Only target inline-style grids, not CSS-class-based grids
+            const inlineGrids = document.querySelectorAll('[style*="grid-template-columns: 1fr 1fr"]');
+            if (window.innerWidth < 768) {
+                inlineGrids.forEach(el => {
+                    if (!el.classList.contains('gallery-grid')) {
+                        el.style.gridTemplateColumns = '1fr';
+                    }
+                });
+            } else {
+                inlineGrids.forEach(el => {
+                    if (!el.classList.contains('gallery-grid')) {
+                        el.style.gridTemplateColumns = '1fr 1fr';
+                    }
+                });
+            }
+        }
+        fixGrids();
+        window.addEventListener('resize', fixGrids);
+    })();
+
+    // ═══════════ COUNTDOWN TIMER ═══════════
+    (function(){
+        const targetDate = new Date('2026-12-18T17:30:00').getTime();
+        
+        const dEl = document.getElementById('cd-days');
+        const hEl = document.getElementById('cd-hours');
+        const mEl = document.getElementById('cd-mins');
+        const sEl = document.getElementById('cd-secs');
+        
+        if (!dEl) return;
+        
+        function pad(n){ return String(Math.max(0,n)).padStart(2,'0'); }
+        
+        function update(){
+            const now = Date.now();
+            const diff = targetDate - now;
+            
+            if (diff <= 0) {
+                dEl.textContent = '00';
+                hEl.textContent = '00';
+                mEl.textContent = '00';
+                sEl.textContent = '00';
+                return;
+            }
+            
+            const days  = Math.floor(diff / (1000*60*60*24));
+            const hours = Math.floor((diff / (1000*60*60)) % 24);
+            const mins  = Math.floor((diff / (1000*60)) % 60);
+            const secs  = Math.floor((diff / 1000) % 60);
+            
+            dEl.textContent = pad(days);
+            hEl.textContent = pad(hours);
+            mEl.textContent = pad(mins);
+            sEl.textContent = pad(secs);
+        }
+        
+        update();
+        setInterval(update, 1000);
+    })();
+
+    // ═══════════ SCRATCH CARD FUNCTIONALITY ═══════════
+    (function(){
+        const scratchCards = document.querySelectorAll('.scratch-card');
+        
+        window.setupScratchCanvases = () => {
+            scratchCards.forEach(card => {
+                const canvas = card.querySelector('canvas');
+                if (canvas && canvas._setup) canvas._setup();
+            });
+        };
+
+        scratchCards.forEach(card => {
+            const result = card.querySelector('.scratch-result');
+            const wrap = document.createElement('div');
+            wrap.className = 'scratch-canvas-wrap';
+            card.appendChild(wrap);
+            
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            wrap.appendChild(canvas);
+            
+            let isDrawing = false;
+            let scratchedPixels = 0;
+            let isRevealed = false;
+            
+            function setupCanvas() {
+                const rect = card.getBoundingClientRect();
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+                const cx = canvas.width / 2;
+                const cy = canvas.height / 2;
+                const r  = Math.min(cx, cy);
+                
+                // Clip to circle shape
+                ctx.save();
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.clip();
+                
+                // Gold radial gradient fill
+                const grad = ctx.createRadialGradient(cx * 0.7, cy * 0.6, r * 0.05, cx, cy, r);
+                grad.addColorStop(0,   '#F0D875');
+                grad.addColorStop(0.4, '#C9A84C');
+                grad.addColorStop(0.8, '#8B6914');
+                grad.addColorStop(1,   '#6B4F0E');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Diagonal lines
+                ctx.strokeStyle = 'rgba(139, 105, 20, 0.35)';
+                ctx.lineWidth = 1;
+                for (let i = -canvas.height; i < canvas.width + canvas.height; i += 12) {
+                    ctx.beginPath();
+                    ctx.moveTo(i, 0);
+                    ctx.lineTo(i + canvas.height, canvas.height);
+                    ctx.stroke();
+                }
+                
+                // Texture dots
+                for (let i = 0; i < 400; i++) {
+                    ctx.fillStyle = `rgba(255,220,100,${Math.random() * 0.25})`;
+                    ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 2.5, Math.random() * 2.5);
+                }
+                
+                // Shine arc at top
+                ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.arc(cx, cy, r * 0.6, Math.PI * 1.2, Math.PI * 1.9);
+                ctx.stroke();
+                
+                // Text
+                ctx.fillStyle = 'rgba(250, 243, 224, 0.9)';
+                const isGrand = card.classList.contains('grand');
+                ctx.font = `bold ${isGrand ? 16 : 13}px "Cinzel Decorative", serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('✦ SCRATCH ✦', cx, cy - (isGrand ? 12 : 10));
+                ctx.font = `${isGrand ? 13 : 11}px "Cormorant Garamond", serif`;
+                ctx.fillStyle = 'rgba(250, 243, 224, 0.65)';
+                ctx.fillText('to reveal', cx, cy + (isGrand ? 10 : 8));
+                
+                ctx.restore();
+                // Now switch to erase mode
+                ctx.globalCompositeOperation = 'destination-out';
+                
+                scratchedPixels = 0;
+                isRevealed = false;
+            }
+            
+            function getPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: clientX - rect.left,
+                    y: clientY - rect.top
+                };
+            }
+            
+            function scratch(e) {
+                if (!isDrawing || isRevealed) return;
+                e.preventDefault();
+                const pos = getPos(e);
+                const isGrand = card.classList.contains('grand');
+                const brushSize = isGrand ? 38 : 28;
+                
+                ctx.globalCompositeOperation = 'destination-out';
+                // Soft gradient eraser for smooth scratching feel
+                const eraseGrad = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, brushSize);
+                eraseGrad.addColorStop(0, 'rgba(0,0,0,1)');
+                eraseGrad.addColorStop(0.5, 'rgba(0,0,0,0.8)');
+                eraseGrad.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = eraseGrad;
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, brushSize, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Count scratched area
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                let transparent = 0;
+                for (let i = 3; i < imageData.data.length; i += 4) {
+                    if (imageData.data[i] === 0) transparent++;
+                }
+                scratchedPixels = transparent / (imageData.data.length / 4);
+                
+                // Auto reveal when 45% scratched
+                if (scratchedPixels > 0.45 && !isRevealed) {
+                    revealCard();
+                }
+            }
+            
+            function revealCard() {
+                if (isRevealed) return;
+                isRevealed = true;
+                isDrawing = false;
+                
+                // Clear entire canvas smoothly
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Mark as scratched and fade out
+                wrap.classList.add('scratched');
+                
+                // Celebration effect
+                card.style.transform = 'scale(1.03)';
+                card.style.transition = 'transform 0.4s ease';
+                setTimeout(() => {
+                    card.style.transform = 'scale(1)';
+                }, 400);
+                
+                // Play a subtle chime if audio context exists
+                try {
+                    if (window.audioCtx) {
+                        const chime = window.audioCtx.createOscillator();
+                        const chimeGain = window.audioCtx.createGain();
+                        chime.type = 'sine';
+                        chime.frequency.value = 880;
+                        chimeGain.gain.setValueAtTime(0, window.audioCtx.currentTime);
+                        chimeGain.gain.linearRampToValueAtTime(0.1, window.audioCtx.currentTime + 0.02);
+                        chimeGain.gain.exponentialRampToValueAtTime(0.001, window.audioCtx.currentTime + 0.3);
+                        chime.connect(chimeGain);
+                        chimeGain.connect(window.audioCtx.destination);
+                        chime.start();
+                        chime.stop(window.audioCtx.currentTime + 0.3);
+                    }
+                } catch(e) {}
+            }
+            
+            function startDraw(e) {
+                if (isRevealed) return;
+                isDrawing = true;
+                scratch(e);
+            }
+            
+            function endDraw() {
+                isDrawing = false;
+            }
+            
+            // Mouse events
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', scratch);
+            canvas.addEventListener('mouseup', endDraw);
+            canvas.addEventListener('mouseleave', endDraw);
+            
+            // Touch events
+            canvas.addEventListener('touchstart', startDraw, { passive: false });
+            canvas.addEventListener('touchmove', scratch, { passive: false });
+            canvas.addEventListener('touchend', endDraw);
+            canvas.addEventListener('touchcancel', endDraw);
+            
+            // Double-click to reveal (easier for some users)
+            canvas.addEventListener('dblclick', revealCard);
+            
+            // Expose setup for later
+            canvas._setup = setupCanvas;
+
+            // Setup on load and resize
+            setTimeout(setupCanvas, 300);
+            window.addEventListener('resize', () => {
+                if (!isRevealed) setupCanvas();
+            });
+        });
+    })();
+
+    // ═══════════ GUEST MESSAGES STORAGE ═══════════
+    (function(){
+        const STORAGE_KEY = 'nizam_wedding_guest_messages_v1';
+        const form = document.getElementById('guest-message-form');
+        const nameInput = document.getElementById('guest-name');
+        const msgInput = document.getElementById('guest-message');
+        const charCount = document.getElementById('char-count');
+        const listEl = document.getElementById('guest-messages-list');
+        const noMsg = document.getElementById('no-messages');
+
+        if (!form) return;
+
+        // ─── ADMIN MODE ───
+        const ADMIN_PASSWORD = 'nizam2026';  // change this to your own secret password
+        let adminMode = false;
+
+        // Toggle admin via secret: tap the "Guest Messages" title 5 times quickly
+        const adminTrigger = document.getElementById('guest-messages-title');
+        let tapCount = 0, tapTimer = null;
+        if (adminTrigger) {
+            adminTrigger.style.cursor = 'default';
+            adminTrigger.addEventListener('click', () => {
+                tapCount++;
+                clearTimeout(tapTimer);
+                tapTimer = setTimeout(() => { tapCount = 0; }, 1500);
+                if (tapCount >= 5) {
+                    tapCount = 0;
+                    if (!adminMode) {
+                        const pw = prompt('Enter admin password to manage messages:');
+                        if (pw === ADMIN_PASSWORD) {
+                            adminMode = true;
+                            alert('✅ Admin mode ON. You can now delete messages.');
+                        } else if (pw !== null) {
+                            alert('❌ Wrong password.');
+                        }
+                    } else {
+                        adminMode = false;
+                        alert('🔒 Admin mode OFF.');
+                    }
+                    renderMessages();
+                    updateAdminBar();
+                }
+            });
+        }
+
+        function updateAdminBar() {
+            let bar = document.getElementById('admin-bar');
+            if (adminMode) {
+                if (!bar) {
+                    bar = document.createElement('div');
+                    bar.id = 'admin-bar';
+                    bar.style.cssText = `
+                        margin: 0 auto 28px; max-width: 420px;
+                        background: rgba(180,30,30,0.15);
+                        border: 1px solid rgba(220,80,80,0.5);
+                        border-radius: 16px; padding: 16px;
+                        display: flex; flex-direction: column; gap: 10px; align-items: center;
+                    `;
+                    bar.innerHTML = `
+                        <span style="color:#ffb4b4; font-size:13px; letter-spacing:2px;">🔓 ADMIN MODE ACTIVE</span>
+                        <button onclick="clearAllGuestMessages()" style="padding:10px 24px; background:rgba(200,40,40,0.9); color:#fff; border:none; border-radius:20px; font-size:13px; letter-spacing:1px; cursor:pointer; font-family:'Cormorant Garamond',serif;">🗑 CLEAR ALL MESSAGES</button>
+                    `;
+                    const titleWrap = adminTrigger ? adminTrigger.parentElement : listEl.parentElement;
+                    titleWrap.parentElement.insertBefore(bar, listEl);
+                }
+                bar.style.display = 'flex';
+            } else if (bar) {
+                bar.style.display = 'none';
+            }
+        }
+
+        function getMessages() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            } catch(e) { return []; }
+        }
+
+        function saveMessages(arr) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+            } catch(e) {}
+        }
+
+        function timeAgo(ts) {
+            const d = Date.now() - ts;
+            if (d < 60000) return 'just now';
+            if (d < 3600000) return Math.floor(d/60000) + ' min ago';
+            if (d < 86400000) return Math.floor(d/3600000) + ' h ago';
+            if (d < 2592000000) return Math.floor(d/86400000) + ' d ago';
+            return new Date(ts).toLocaleDateString();
+        }
+
+        function formatName(name) {
+            const n = name.trim();
+            if (!n) return 'Anonymous';
+            return n.charAt(0).toUpperCase() + n.slice(1).toLowerCase();
+        }
+
+        function getInitial(name) {
+            const n = name.trim();
+            if (!n) return '✦';
+            return n.charAt(0).toUpperCase();
+        }
+
+        function renderMessages() {
+            const msgs = getMessages();
+            if (!msgs.length) {
+                listEl.innerHTML = '';
+                listEl.appendChild(noMsg);
+                return;
+            }
+            listEl.innerHTML = '';
+            // Sort newest first
+            msgs.sort((a,b) => b.timestamp - a.timestamp).forEach((m, i) => {
+                const card = document.createElement('div');
+                card.className = 'guest-message-card';
+                card.style.cssText = `
+                    background: linear-gradient(145deg, rgba(20,73,58,0.55), rgba(8,8,8,0.75));
+                    border: 1px solid rgba(201,168,76,0.3);
+                    border-radius: 20px;
+                    padding: 24px 20px;
+                    backdrop-filter: blur(10px);
+                    position: relative;
+                    box-shadow: 0 15px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(232,201,122,0.08);
+                    text-align: center;
+                    animation: msgIn 0.6s ease ${i * 0.08}s both;
+                    display: flex;
+                    flex-direction: column;
+                `;
+                // Decorative corner quotes
+                const quoteL = document.createElement('div');
+                quoteL.className = 'quote-l';
+                quoteL.style.cssText = `
+                    position: absolute; top: 8px; left: 18px;
+                    font-family: 'Cinzel Decorative', serif;
+                    font-size: 44px; color: rgba(201,168,76,0.35);
+                    line-height: 1; font-weight: 700;
+                `;
+                quoteL.textContent = '\u201C';
+
+                const quoteR = document.createElement('div');
+                quoteR.className = 'quote-r';
+                quoteR.style.cssText = `
+                    position: absolute; bottom: 0px; right: 20px;
+                    font-family: 'Cinzel Decorative', serif;
+                    font-size: 44px; color: rgba(201,168,76,0.35);
+                    line-height: 1; font-weight: 700;
+                `;
+                quoteR.textContent = '\u201D';
+
+                const msgP = document.createElement('p');
+                msgP.className = 'message-text';
+                msgP.style.cssText = `
+                    font-size: 17px; color: rgba(250,243,224,0.88);
+                    line-height: 1.7; margin: 18px 0 20px; font-style: italic;
+                    position: relative; padding: 0 8px;
+                    overflow-wrap: break-word;
+                `;
+                msgP.textContent = m.message;
+
+                const divider = document.createElement('div');
+                divider.className = 'message-divider';
+                divider.style.cssText = `
+                    width: 70px; height: 1px; margin: auto auto 18px;
+                    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent);
+                `;
+
+                const nameRow = document.createElement('div');
+                nameRow.className = 'guest-name-row';
+                nameRow.style.cssText = `
+                    display: flex; align-items: center; justify-content: center; gap: 12px;
+                    font-size: 14px; color: rgba(201,168,76,0.85); letter-spacing: 1px;
+                `;
+                const avatar = document.createElement('div');
+                avatar.className = 'avatar';
+                avatar.style.cssText = `
+                    width: 32px; height: 32px; border-radius: 50%;
+                    background: linear-gradient(145deg, var(--gold2), var(--gold3));
+                    color: var(--black); font-weight: 700;
+                    display: flex; align-items: center; justify-content: center;
+                    font-size: 14px; font-family: 'Cinzel Decorative', serif;
+                    flex-shrink: 0;
+                `;
+                avatar.textContent = getInitial(m.name);
+                const nameLabel = document.createElement('span');
+                nameLabel.style.cssText = 'font-weight: 700;';
+                nameLabel.textContent = formatName(m.name);
+                const dot = document.createElement('span');
+                dot.textContent = '·';
+                const time = document.createElement('span');
+                time.style.cssText = 'font-size: 12px; color: rgba(250,243,224,0.4);';
+                time.textContent = timeAgo(m.timestamp);
+                nameRow.appendChild(avatar);
+                nameRow.appendChild(nameLabel);
+                nameRow.appendChild(dot);
+                nameRow.appendChild(time);
+
+                card.appendChild(quoteL);
+                card.appendChild(msgP);
+                card.appendChild(quoteR);
+                card.appendChild(divider);
+                card.appendChild(nameRow);
+
+                // Admin delete button (hidden unless admin mode is on)
+                const delBtn = document.createElement('button');
+                delBtn.className = 'admin-del-btn';
+                delBtn.innerHTML = '🗑 Delete';
+                delBtn.style.cssText = `
+                    margin-top: 14px;
+                    display: ${adminMode ? 'inline-block' : 'none'};
+                    padding: 7px 18px;
+                    background: rgba(180,30,30,0.85);
+                    color: #fff;
+                    border: 1px solid rgba(255,120,120,0.6);
+                    border-radius: 20px;
+                    font-size: 12px;
+                    letter-spacing: 1px;
+                    cursor: pointer;
+                    font-family: 'Cormorant Garamond', serif;
+                    align-self: center;
+                    transition: background 0.3s ease;
+                `;
+                delBtn.onmouseover = () => delBtn.style.background = 'rgba(220,40,40,1)';
+                delBtn.onmouseout = () => delBtn.style.background = 'rgba(180,30,30,0.85)';
+                delBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    if (confirm('Delete this message from ' + formatName(m.name) + '?')) {
+                        deleteMessage(m.timestamp);
+                    }
+                };
+                card.appendChild(delBtn);
+
+                listEl.appendChild(card);
+            });
+        }
+
+        // Delete a single message by its timestamp
+        function deleteMessage(ts) {
+            let msgs = getMessages();
+            msgs = msgs.filter(m => m.timestamp !== ts);
+            saveMessages(msgs);
+            renderMessages();
+        }
+
+        // Clear all messages
+        window.clearAllGuestMessages = function() {
+            if (confirm('⚠️ Delete ALL guest messages? This cannot be undone.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                renderMessages();
+            }
+        };
+
+        // Add keyframe
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes msgIn {
+                0% { opacity: 0; transform: translateY(25px) scale(0.97); }
+                100% { opacity: 1; transform: translateY(0) scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Char counter
+        msgInput.addEventListener('input', () => {
+            charCount.textContent = msgInput.value.length + ' / 300 characters';
+        });
+
+        // Submit handler
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = nameInput.value.trim();
+            const message = msgInput.value.trim();
+            if (!name || !message) return;
+
+            const msgs = getMessages();
+            msgs.push({
+                name,
+                message,
+                timestamp: Date.now()
+            });
+            saveMessages(msgs);
+
+            // Clear form
+            nameInput.value = '';
+            msgInput.value = '';
+            charCount.textContent = '0 / 300 characters';
+
+            // Re-render
+            renderMessages();
+            renderTimestamps();
+
+            // Celebrate with chime
+            try {
+                if (window.audioCtx) {
+                    const ch = window.audioCtx;
+                    [660, 880, 1100].forEach((freq, i) => {
+                        const o = ch.createOscillator();
+                        const g = ch.createGain();
+                        o.type = 'sine'; o.frequency.value = freq;
+                        g.gain.setValueAtTime(0, ch.currentTime + i*0.1);
+                        g.gain.linearRampToValueAtTime(0.08, ch.currentTime + i*0.1 + 0.02);
+                        g.gain.exponentialRampToValueAtTime(0.001, ch.currentTime + i*0.1 + 0.3);
+                        o.connect(g); g.connect(ch.destination);
+                        o.start(ch.currentTime + i*0.1);
+                        o.stop(ch.currentTime + i*0.1 + 0.35);
+                    });
+                }
+            } catch(err) {}
+        });
+
+        function renderTimestamps() {
+            // Refreshing every minute to update relative times
+            clearInterval(window._msgTimer);
+            window._msgTimer = setInterval(renderMessages, 60000);
+        }
+
+        // Initial render
+        renderMessages();
+        renderTimestamps();
+    })();
+
+    // ═══════════ PREMIUM TOUCH / HOVER GLOW EFFECT ═══════════
+    (function(){
+        const selector = '.gallery-item, .glass-panel, .wedding-card, .ceremony-deck, .countdown-box, .scratch-card, .photo-frame, .guest-message-card, .double-border, .map-btn';
+        const elements = document.querySelectorAll(selector);
+        
+        // Detect device capability
+        const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        const supportsTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+        elements.forEach(el => {
+            // ─── MOUSE TRACKING for radial glow (desktop/laptop/TV) ───
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                el.style.setProperty('--mx', x + '%');
+                el.style.setProperty('--my', y + '%');
+            });
+
+            el.addEventListener('mouseleave', () => {
+                el.style.setProperty('--mx', '50%');
+                el.style.setProperty('--my', '50%');
+            });
+
+            // ─── TOUCH HANDLING for mobile/tablet ───
+            if (supportsTouch) {
+                el.addEventListener('touchstart', (e) => {
+                    // Update glow position to touch point
+                    const touch = e.touches[0];
+                    const rect = el.getBoundingClientRect();
+                    const x = ((touch.clientX - rect.left) / rect.width) * 100;
+                    const y = ((touch.clientY - rect.top) / rect.height) * 100;
+                    el.style.setProperty('--mx', x + '%');
+                    el.style.setProperty('--my', y + '%');
+                    el.classList.add('touched');
+
+                    // Create ripple at touch point
+                    createRipple(el, touch.clientX, touch.clientY);
+                }, { passive: true });
+
+                el.addEventListener('touchend', () => {
+                    setTimeout(() => el.classList.remove('touched'), 1200);
+                }, { passive: true });
+
+                el.addEventListener('touchcancel', () => {
+                    el.classList.remove('touched');
+                }, { passive: true });
+            }
+
+            // ─── CLICK / PRESS VISUAL FEEDBACK ───
+            const startPress = () => {
+                el.classList.add('press-active');
+                
+                // Add a brief light flash inside
+                const flash = document.createElement('div');
+                flash.className = 'press-flash';
+                el.appendChild(flash);
+                setTimeout(() => flash.remove(), 450);
+            };
+
+            const endPress = () => {
+                el.classList.remove('press-active');
+            };
+
+            // Mouse events
+            el.addEventListener('mousedown', startPress);
+            window.addEventListener('mouseup', endPress);
+
+            // Touch events
+            el.addEventListener('touchstart', startPress, { passive: true });
+            el.addEventListener('touchend', endPress, { passive: true });
+            el.addEventListener('touchcancel', endPress, { passive: true });
+
+            // ─── CLICK ripple for desktop (so you also see ripple on click) ───
+            el.addEventListener('click', (e) => {
+                createRipple(el, e.clientX, e.clientY);
+            });
+        });
+
+        function createRipple(el, clientX, clientY) {
+            const rect = el.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple-effect';
+            ripple.style.left = (clientX - rect.left - 40) + 'px';
+            ripple.style.top = (clientY - rect.top - 40) + 'px';
+            
+            // Make sure element clips ripple
+            const originalOverflow = el.style.overflow;
+            if (getComputedStyle(el).overflow === 'visible') {
+                el.style.overflow = 'hidden';
+                el.style.position = el.style.position || 'relative';
+            }
+            
+            el.appendChild(ripple);
+            setTimeout(() => {
+                ripple.remove();
+                if (originalOverflow !== undefined) {
+                    el.style.overflow = originalOverflow;
+                }
+            }, 900);
+        }
+
+        console.log('✨ Premium touch/glow effect activated on', elements.length, 'elements');
+    })();
+
+    // ═══════════ WELCOME GATE UNLOCK ═══════════
+    window.unlockInvitation = function() {
+        const gate = document.getElementById('welcome-gate');
+        const wrapper = document.getElementById('main-content-wrapper');
+        const body = document.body;
+        if (!gate || !wrapper || gate.dataset.opening === 'true') return;
+        gate.dataset.opening = 'true';
+
+        // Prime the song silently from this user click. It fades in only when the main page appears.
+        if (typeof window.primeInvitationMusic === 'function') {
+            window.primeInvitationMusic();
+        }
+
+        // Build the portal zoom from the small Charminar gate.
+        const anchor = document.getElementById('charminar-gate-anchor') || document.getElementById('charminar-logo-wrap');
+        const rect = anchor.getBoundingClientRect();
+        const portal = document.createElement('div');
+        portal.id = 'gate-zoom-portal';
+        portal.style.left = rect.left + 'px';
+        portal.style.top = rect.top + 'px';
+        portal.style.width = rect.width + 'px';
+        portal.style.height = rect.height + 'px';
+        portal.style.opacity = '1';
+        document.body.appendChild(portal);
+
+        gate.classList.add('gate-opening');
+        gate.style.pointerEvents = 'none';
+
+        // Prepare main content while the gate zooms.
+        wrapper.style.visibility = 'visible';
+
+        // Expand the portal until it becomes the whole screen.
+        requestAnimationFrame(() => {
+            portal.style.left = '50%';
+            portal.style.top = '50%';
+            portal.style.width = '145vmax';
+            portal.style.height = '145vmax';
+            portal.style.transform = 'translate(-50%, -50%)';
+        });
+
+        // Reveal main invitation after the zoom lands.
+        setTimeout(() => {
+            gate.style.opacity = '0';
+            portal.style.opacity = '0';
+            wrapper.style.opacity = '1';
+            wrapper.style.transform = 'translateY(0)';
+            body.classList.remove('overflow-hidden');
+            body.classList.add('invitation-opened'); // Activate letter-by-letter
+            body.style.overflowX = 'hidden';
+            body.style.overflowY = 'auto';
+            
+            // Re-trigger reveal animations for visible elements
+            if (window.refreshReveals) window.refreshReveals();
+            
+            // Re-setup scratch canvases (needed because they were hidden)
+            if (window.setupScratchCanvases) window.setupScratchCanvases();
+
+            // Main page is now visible: fade in Jhilmil Sitaron.
+            if (typeof window.fadeInInvitationMusic === 'function') window.fadeInInvitationMusic();
+        }, 1180);
+
+        // Remove gate/portal after the transition completes.
+        setTimeout(() => {
+            gate.style.display = 'none';
+            portal.remove();
+            // IMPORTANT: clear the transform so position:fixed children (floating audio)
+            // stay truly fixed to the viewport instead of scrolling with the page.
+            wrapper.style.transition = 'none';
+            wrapper.style.transform = 'none';
+            wrapper.style.willChange = 'auto';
+        }, 2100);
+    };
+
+    // ═══════════ MOON AND FALLING STARS ANIMATION ═══════════
+    (function(){
+        const container = document.getElementById('celestial-container');
+        if (!container) return;
+        
+        function createFallingStar() {
+            const star = document.createElement('div');
+            star.className = 'falling-star';
+            
+            // Random horizontal position
+            star.style.left = Math.random() * 100 + 'vw';
+            
+            // Random duration for "slow but continuous" feel (6-12 seconds)
+            const duration = 6 + Math.random() * 6;
+            star.style.animationDuration = duration + 's';
+            
+            // Random delay so they don't start all at once
+            star.style.animationDelay = Math.random() * 5 + 's';
+            
+            container.appendChild(star);
+            
+            // Remove star after its animation ends to keep DOM clean
+            setTimeout(() => {
+                star.remove();
+            }, (duration + 5) * 1000);
+        }
+        
+        // Create initial batch
+        for(let i = 0; i < 8; i++) {
+            createFallingStar();
+        }
+        
+        // Continuously create stars
+        setInterval(createFallingStar, 1400);
+    })();
+    </script>
+</body>
+</html>
