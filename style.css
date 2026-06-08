@@ -1,3 +1,9 @@
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -55,7 +61,7 @@
         #welcome-gate.gate-opening #welcome-stage {
             transform: scale(1.1);
             opacity: 0.45;
-            filter: blur(1.5px);
+            filter: blur(1px);
         }
 
         @media (max-width: 600px) {
@@ -167,8 +173,8 @@
                 rgba(13,59,46,0.35) 0%,
                 rgba(8,8,8,0.6) 50%,
                 rgba(13,59,46,0.25) 100%);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(201,168,76,0.15);
         }
 
@@ -357,7 +363,7 @@
         .floating-audio {
             position: fixed; bottom: 24px; right: 24px; z-index: 9000;
             background: rgba(8,8,8,0.9); border: 1px solid rgba(201,168,76,0.4);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             border-radius: 20px; padding: 12px 20px;
             display: flex; align-items: center; gap: 14px;
@@ -388,6 +394,7 @@
             max-width: 700px;
             margin: 0 auto;
             padding: 0 24px 80px;
+            overflow-x: hidden;
         }
         .scratch-header {
             text-align: center;
@@ -416,7 +423,7 @@
             text-align: center;
             background: rgba(13,59,46,0.5);
             border: 2px solid rgba(201,168,76,0.4);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
             box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 4px rgba(13,59,46,0.6), 0 0 0 6px rgba(201,168,76,0.15);
         }
         .scratch-card.grand {
@@ -1018,3 +1025,49 @@
             .hero-title .letter { animation: none; opacity: 1; transform: none; }
             #bg-shimmer { animation: none; }
         }
+        @media (max-width: 768px) {
+
+    div[style*="grid-template-columns: 1fr 1fr"] {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+}
+html,
+body {
+    overflow-x: hidden !important;
+    width: 100%;
+    max-width: 100%;
+}
+@media (max-width: 768px) {
+
+    section div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+
+}
+@media (max-width: 768px) {
+
+    .dual-showcase,
+    .ceremony-grid,
+    .groom-grid,
+    .family-grid,
+    .cards-grid {
+
+        grid-template-columns: 1fr !important;
+    }
+
+}
+html,
+body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+section,
+div,
+main {
+    max-width: 100%;
+}
