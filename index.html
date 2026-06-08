@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-        <script type="module">
+    <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
     import {
     getFirestore,
@@ -17,7 +17,9 @@
     query,
     orderBy,
     onSnapshot,
-    serverTimestamp
+    serverTimestamp,
+    deleteDoc,
+    doc
     } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -39,7 +41,9 @@
     query,
     orderBy,
     onSnapshot,
-    serverTimestamp
+    serverTimestamp,
+    deleteDoc,
+    doc
     };
     </script>
     <script src="script.js" defer></script>
