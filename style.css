@@ -200,7 +200,7 @@ body {
             transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1),
                         transform 0.9s cubic-bezier(0.22,1,0.36,1);
         }
-        .invitation-opened .reveal-stagger.active > *:nth-child(1)  { opacity:1; transform:translateY(0); transition-delay:0.1s; }
+        .invitation-opened .reveal-stagger.active > *:nth-child(1)  { opacity:1; transform:translateY(0); transition-delay:0s; }
         .invitation-opened .reveal-stagger.active > *:nth-child(2)  { opacity:1; transform:translateY(0); transition-delay:0.2s; }
         .invitation-opened .reveal-stagger.active > *:nth-child(3)  { opacity:1; transform:translateY(0); transition-delay:0.3s; }
         .invitation-opened .reveal-stagger.active > *:nth-child(4)  { opacity:1; transform:translateY(0); transition-delay:0.4s; }
