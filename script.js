@@ -1100,11 +1100,8 @@ function launchFireworks(){const canvas=document.getElementById('fireworks-canva
 
         try {
             await firebaseFunctions.runTransaction(firebaseDB, async (tx) => {
-                const snap = await tx.get(counterRef);
-                const actual = snap.exists() ? cleanCount(snap.data().actualCount ?? 0) : 0;
                 tx.set(counterRef, {
                     count,
-                    actualCount: actual,
                     updatedAt: firebaseFunctions.serverTimestamp()
                 }, { merge: true });
             });
