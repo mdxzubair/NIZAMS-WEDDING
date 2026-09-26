@@ -21,6 +21,7 @@
         serverTimestamp,
         deleteDoc,
         updateDoc,
+        runTransaction,
         doc
     } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
@@ -56,6 +57,7 @@
         serverTimestamp,
         deleteDoc,
         updateDoc,
+        runTransaction,
         doc,
         signInWithEmailAndPassword,
         signOut,
@@ -363,7 +365,7 @@
             </div>
         </div>
 
-        <p class="scratch-hint" style="margin-top: 24px;">Scratch it!!!!!!!!!🎉🎉</p>
+        <p class="scratch-hint" style="margin-top: 24px;">Double-tap a circle to instantly reveal</p>
     </section>
 
 
@@ -395,7 +397,7 @@
             </div>
         </div>
 
-        <p class="countdown-hint">Celebrations Begins From: <strong>18th December 2026</strong></p>
+        <p class="countdown-hint">Target date: <strong>18th December 2026</strong></p>
     </section>
 
 
@@ -620,7 +622,9 @@
 
             <form id="rsvp-form" style="display: flex; flex-direction: column; gap: 14px;" novalidate>
                 <input id="rsvp-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" type="text">
-                <input id="rsvp-name" name="name" type="text" maxlength="80" placeholder="Full Name" required autocomplete="name" style="display:block; width:100%; box-sizing:border-box; background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <input id="rsvp-name" name="name" type="text" maxlength="80" placeholder="Full Name" required autocomplete="name" style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif;">
+                </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                     <select id="rsvp-guests" name="guests" required style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif; width: 100%;">
                         <option value="1" selected>1 Guest</option><option value="2">2 Guests</option><option value="3">3 Guests</option><option value="4">4 Guests</option><option value="5">5 Guests</option><option value="6">6 Guests</option><option value="7">7 Guests</option><option value="8">8 Guests</option><option value="9">9 Guests</option><option value="10">10 Guests</option>
@@ -683,6 +687,14 @@
             </p>
         </div>
 
+        <!-- ═══════ LIVE VISITOR COUNT ═══════ -->
+        <div id="visitor-counter" class="visitor-counter" aria-live="polite" aria-atomic="true">
+            <p class="visitor-counter-label">Live count of visitors to this<br>webinvite</p>
+            <div id="visitor-count" class="visitor-count" aria-label="0 visitors">
+                <span class="visitor-digit static">0</span>
+            </div>
+        </div>
+
         <!-- Messages display -->
         <div style="text-align: center; margin-bottom: 30px;">
             <p id="guest-messages-title" class="heading" style="font-size: 18px; color: var(--gold2); letter-spacing: 3px;">
@@ -742,6 +754,24 @@
         </div>
         <div id="admin-dashboard-view" class="admin-view" hidden>
           <div class="admin-stats" id="admin-stats"></div>
+          <div class="admin-visitor-control">
+            <div class="admin-visitor-control-copy">
+              <span class="admin-kicker">LIVE VISITOR COUNT</span>
+              <strong id="admin-visitor-current">0</strong>
+              <small>Editable value shown live on the invitation.</small>
+            </div>
+            <div class="admin-visitor-actual-card" aria-label="Actual visitor count">
+              <span class="admin-kicker">ACTUAL COUNT</span>
+              <strong id="admin-visitor-actual">0</strong>
+              <small>Visitors actually recorded by the counter</small>
+            </div>
+            <div class="admin-visitor-actions">
+              <input id="admin-visitor-count" type="number" min="0" step="1" inputmode="numeric" placeholder="Set count" aria-label="Visitor count">
+              <button id="admin-visitor-set" class="admin-small-btn" type="button">SET COUNT</button>
+              <button id="admin-visitor-reset" class="admin-danger-btn" type="button">RESET TO 0</button>
+            </div>
+            <p id="admin-visitor-status" class="admin-visitor-status" role="status" aria-live="polite"></p>
+          </div>
           <div class="admin-tabs"><button class="admin-tab active" data-admin-tab="messages">Messages</button><button class="admin-tab" data-admin-tab="rsvps">RSVPs</button></div>
           <div id="admin-messages-view" class="admin-tab-view">
             <div class="admin-toolbar"><input id="admin-message-search" placeholder="Search messages…"><select id="admin-message-sort"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></div>
