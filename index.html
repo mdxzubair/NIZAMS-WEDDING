@@ -10,42 +10,56 @@
     <link rel="stylesheet" href="style.css">
     <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
     import {
-    getFirestore,
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    onSnapshot,
-    serverTimestamp,
-    deleteDoc,
-    doc
+        getFirestore,
+        collection,
+        addDoc,
+        query,
+        orderBy,
+        onSnapshot,
+        serverTimestamp,
+        deleteDoc,
+        doc
     } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+    import {
+        getAuth,
+        signInWithEmailAndPassword,
+        signOut,
+        onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
     const firebaseConfig = {
-    apiKey: "AIzaSyCKkC8c7NW4CbaKQvf2WV0L2n1u8lT-DPU",
-    authDomain: "nizams-wedding.firebaseapp.com",
-    projectId: "nizams-wedding",
-    storageBucket: "nizams-wedding.firebasestorage.app",
-    messagingSenderId: "838784406552",
-    appId: "1:838784406552:web:e84bc250743e72d62ddf6d"
+        apiKey: "AIzaSyCKkC8c7NW4CbaKQvf2WV0L2n1u8lT-DPU",
+        authDomain: "nizams-wedding.firebaseapp.com",
+        projectId: "nizams-wedding",
+        storageBucket: "nizams-wedding.firebasestorage.app",
+        messagingSenderId: "838784406552",
+        appId: "1:838784406552:web:e84bc250743e72d62ddf6d"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const auth = getAuth(app);
 
     window.firebaseDB = db;
+    window.firebaseAuth = auth;
+
     window.firebaseFunctions = {
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    onSnapshot,
-    serverTimestamp,
-    deleteDoc,
-    doc
+        collection,
+        addDoc,
+        query,
+        orderBy,
+        onSnapshot,
+        serverTimestamp,
+        deleteDoc,
+        doc,
+        signInWithEmailAndPassword,
+        signOut,
+        onAuthStateChanged
     };
-    </script>
+</script>
     <script src="script.js" defer></script>
 </head>
 <body class="overflow-x-hidden">
