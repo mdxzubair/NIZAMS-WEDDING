@@ -1144,9 +1144,38 @@ main {
     text-shadow:0 0 14px rgba(201,168,76,.7);
     pointer-events:none;
 }
+/* ═══════════ VISITOR COUNTER — MINI WEDDING CELEBRATION ═══════════ */
+.visitor-celebration-canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+    display:block;
+}
+.visitor-celebration-glow{
+    position:absolute;
+    z-index:0;
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    pointer-events:none;
+    opacity:.18;
+    filter:blur(14px);
+    background:radial-gradient(circle,rgba(232,201,122,.95) 0%,rgba(201,168,76,.35) 35%,transparent 72%);
+    animation:visitorCelebrationGlow 2.8s ease-in-out infinite;
+}
+.visitor-celebration-glow-left{left:8%;top:48%;animation-delay:.15s}
+.visitor-celebration-glow-right{right:8%;top:42%;animation-delay:1.35s}
+@keyframes visitorCelebrationGlow{
+    0%,100%{transform:scale(.65);opacity:.08}
+    45%{transform:scale(1.2);opacity:.24}
+    65%{transform:scale(.9);opacity:.13}
+}
 .visitor-counter-label{
     position:relative;
-    z-index:2;
+    z-index:3;
     max-width:100%;
     margin:0 0 18px;
     font-family:'Cormorant Garamond',serif;
@@ -1160,7 +1189,7 @@ main {
 }
 .visitor-count{
     position:relative;
-    z-index:2;
+    z-index:3;
     display:flex;
     align-items:center;
     justify-content:center;
