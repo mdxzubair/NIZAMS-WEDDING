@@ -579,7 +579,7 @@
         });
     })();
 
-   // ═══════════ FIREBASE GUEST MESSAGES ═══════════
+// ═══════════ FIREBASE GUEST MESSAGES ═══════════
 (function () {
 
     const form = document.getElementById('guest-message-form');
@@ -590,288 +590,485 @@
     const noMsg = document.getElementById('no-messages');
 
     if (!form) return;
-    const ADMIN_PASSWORD = "ni mlm";
 
-let adminMode =
-localStorage.getItem("adminMode") === "true";
+    // Firebase UID authorized to delete messages
+    const ADMIN_UID = "TyGIV4xQbESrne5q0FGWO7nqf022";
 
-const adminTrigger =
-    document.getElementById(
-        "guest-messages-title"
-    );
+    let adminMode = false;
+    let latestSnapshot = null;
 
-let tapCount = 0;
+    const adminTrigger =
+        document.getElementById("guest-messages-title");
 
-if (adminTrigger) {
+    let tapCount = 0;
 
-    adminTrigger.addEventListener("click",() => {
+    // ═══════════ ADMIN LOGIN ═══════════
+
+    if (adminTrigger) {
+
+        adminTrigger.addEventListener("click", () => {
 
             tapCount++;
 
-            setTimeout(
-                () => tapCount = 0,
-                1500
-            );
+            setTimeout(() => {
+                tapCount = 0;
+            }, 1500);
 
             if (tapCount >= 5) {
 
                 tapCount = 0;
 
-                const pw = prompt(
-                    "Enter admin password"
+                // Already logged in
+                if (adminMode) {
+
+                    const logout =
+                        confirm("Admin Mode is ON. Sign out?");
+
+                    if (!logout) return;
+
+                    firebaseFunctions
+                        .signOut(firebaseAuth)
+                        .then(() => {
+
+                            adminMode = false;
+
+                            alert("Admin Mode OFF");
+
+                            renderMessages(latestSnapshot);
+
+                        })
+                        .catch(err => {
+
+                            console.error(
+                                "Admin sign-out failed:",
+                                err
+                            );
+
+                            alert(
+                                "Admin sign-out failed."
+                            );
+
+                        });
+
+                    return;
+                }
+
+                // Firebase admin login
+                const email =
+                    prompt("Enter admin email");
+
+                if (!email) return;
+
+                const password =
+                    prompt("Enter admin password");
+
+                if (!password) return;
+
+                firebaseFunctions
+                    .signInWithEmailAndPassword(
+                        firebaseAuth,
+                        email.trim(),
+                        password
+                    )
+
+                    .then((credential) => {
+
+                        // Make sure this is YOUR admin account
+                        if (
+                            credential.user.uid !==
+                            ADMIN_UID
+                        ) {
+
+                            return firebaseFunctions
+                                .signOut(firebaseAuth)
+                                .then(() => {
+
+                                    throw new Error(
+                                        "Unauthorized admin account"
+                                    );
+
+                                });
+
+                        }
+
+                        adminMode = true;
+
+                        alert("Admin Mode ON");
+
+                        renderMessages(
+                            latestSnapshot
+                        );
+
+                    })
+
+                    .catch(err => {
+
+                        console.error(
+                            "Admin login failed:",
+                            err
+                        );
+
+                        alert(
+                            "Admin login failed. Check your email and password."
+                        );
+
+                    });
+            }
+        });
+    }
+
+
+    // ═══════════ RESTORE FIREBASE LOGIN ═══════════
+
+    firebaseFunctions.onAuthStateChanged(
+        firebaseAuth,
+        (user) => {
+
+            adminMode =
+                !!user &&
+                user.uid === ADMIN_UID;
+
+            renderMessages(
+                latestSnapshot
+            );
+        }
+    );
+
+
+    // ═══════════ CHARACTER COUNTER ═══════════
+
+    msgInput.addEventListener(
+        'input',
+        () => {
+
+            charCount.textContent =
+                msgInput.value.length +
+                ' / 300 characters';
+
+        }
+    );
+
+
+    // ═══════════ SUBMIT MESSAGE ═══════════
+
+    form.addEventListener(
+        'submit',
+        async (e) => {
+
+            e.preventDefault();
+
+            const name =
+                nameInput.value.trim();
+
+            const message =
+                msgInput.value.trim();
+
+            if (!name || !message) return;
+
+            try {
+
+                await firebaseFunctions.addDoc(
+
+                    firebaseFunctions.collection(
+                        firebaseDB,
+                        "messages"
+                    ),
+
+                    {
+                        name,
+                        message,
+                        timestamp:
+                            firebaseFunctions
+                                .serverTimestamp()
+                    }
                 );
 
-                if (
-                    pw === ADMIN_PASSWORD
-                ) {
+                form.reset();
 
-                    adminMode = !adminMode;
+                charCount.textContent =
+                    '0 / 300 characters';
 
-                    localStorage.setItem(
-                        "adminMode",
-                        adminMode
-                    );
+            } catch (err) {
 
-                    alert(
-                        adminMode
-                        ? "Admin Mode ON"
-                        : "Admin Mode OFF"
-                    );
-                    location.reload();
-                }
+                console.error(err);
+
+                alert(
+                    'Failed to send message. Please try again.'
+                );
+
             }
+
         }
     );
-}
 
-    // Character Counter
-    msgInput.addEventListener('input', () => {
-        charCount.textContent =
-            msgInput.value.length + ' / 300 characters';
-    });
 
-    // Submit Message
-    form.addEventListener('submit', async (e) => {
+    // ═══════════ LIVE MESSAGES QUERY ═══════════
 
-        e.preventDefault();
+    const q =
+        firebaseFunctions.query(
 
-        const name = nameInput.value.trim();
-        const message = msgInput.value.trim();
+            firebaseFunctions.collection(
+                firebaseDB,
+                "messages"
+            ),
 
-        if (!name || !message) return;
+            firebaseFunctions.orderBy(
+                "timestamp",
+                "desc"
+            )
+        );
 
-        try {
 
-            await firebaseFunctions.addDoc(
-                firebaseFunctions.collection(
-                    firebaseDB,
-                    "messages"
-                ),
-                {
-                    name,
-                    message,
-                    timestamp: firebaseFunctions.serverTimestamp()
-                }
-            );
+    // ═══════════ TIME AGO ═══════════
 
-            form.reset();
-            charCount.textContent =
-                '0 / 300 characters';
-
-        } catch (err) {
-
-            console.error(err);
-
-            alert(
-                'Failed to send message. Please try again.'
-            );
-        }
-    });
-
-    // Live Messages
-    const q = firebaseFunctions.query(
-        firebaseFunctions.collection(
-            firebaseDB,
-            "messages"
-        ),
-        firebaseFunctions.orderBy(
-            "timestamp",
-            "desc"
-        )
-    );
     function timeAgo(timestamp) {
 
-    if (!timestamp) return "Just now";
+        if (!timestamp)
+            return "Just now";
 
-    const date =
-        timestamp.toDate
-        ? timestamp.toDate()
-        : new Date(timestamp);
+        const date =
+            timestamp.toDate
+                ? timestamp.toDate()
+                : new Date(timestamp);
 
-    const diff =
-        Date.now() - date.getTime();
+        const diff =
+            Date.now() -
+            date.getTime();
 
-    const mins =
-        Math.floor(diff / 60000);
+        const mins =
+            Math.floor(
+                diff / 60000
+            );
 
-    const hours =
-        Math.floor(diff / 3600000);
+        const hours =
+            Math.floor(
+                diff / 3600000
+            );
 
-    const days =
-        Math.floor(diff / 86400000);
+        const days =
+            Math.floor(
+                diff / 86400000
+            );
 
-    if (mins < 1) return "Just now";
+        if (mins < 1)
+            return "Just now";
 
-    if (mins < 60)
-        return mins + " min ago";
+        if (mins < 60)
+            return mins + " min ago";
 
-    if (hours < 24)
-        return hours + " hour ago";
+        if (hours < 24)
+            return hours + " hour ago";
 
-    if (days === 1)
-        return "Yesterday";
+        if (days === 1)
+            return "Yesterday";
 
-    if (days < 30)
-        return days + " days ago";
+        if (days < 30)
+            return days + " days ago";
 
-    return date.toLocaleDateString();
-}
+        return date.toLocaleDateString();
+    }
+
+
+    // ═══════════ RENDER MESSAGES ═══════════
+
+    function renderMessages(snapshot) {
+
+        if (!snapshot)
+            return;
+
+        listEl.innerHTML = '';
+
+        if (snapshot.empty) {
+
+            listEl.appendChild(noMsg);
+
+            return;
+        }
+
+        snapshot.forEach((docSnap) => {
+
+            const m =
+                docSnap.data();
+
+            const messageId =
+                docSnap.id;
+
+            const card =
+                document.createElement('div');
+
+            card.className =
+                'guest-message-card';
+
+            card.style.cssText = `
+                background: linear-gradient(
+                    145deg,
+                    rgba(20,73,58,0.55),
+                    rgba(8,8,8,0.75)
+                );
+                border: 1px solid rgba(201,168,76,0.3);
+                border-radius: 20px;
+                padding: 24px 20px;
+                backdrop-filter: blur(10px);
+                margin-bottom: 20px;
+                text-align:center;
+            `;
+
+            card.innerHTML = `
+                <div style="
+                    width:40px;
+                    height:40px;
+                    margin:auto;
+                    border-radius:50%;
+                    background:linear-gradient(
+                        145deg,
+                        #E8C97A,
+                        #C9A84C
+                    );
+                    color:#000;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-weight:bold;
+                    margin-bottom:12px;
+                ">
+                    ${(m.name || '?')
+                        .charAt(0)
+                        .toUpperCase()}
+                </div>
+
+                <h4 style="
+                    color:#E8C97A;
+                    margin-bottom:10px;
+                ">
+                    ${m.name}
+                </h4>
+
+                <p style="
+                    color:#FAF3E0;
+                    line-height:1.6;
+                ">
+                    ${m.message}
+                </p>
+
+                <p style="
+                    color:#FAF3E0;
+                    line-height:1.6;
+                ">
+                    ${timeAgo(m.timestamp)}
+                </p>
+            `;
+
+
+            // ═══════════ DELETE BUTTON ═══════════
+
+            if (adminMode) {
+
+                const delBtn =
+                    document.createElement(
+                        "button"
+                    );
+
+                delBtn.innerHTML =
+                    "🗑 Delete";
+
+                delBtn.style.cssText = `
+                    margin-top:12px;
+                    padding:8px 16px;
+                    border:none;
+                    border-radius:20px;
+                    background:#b22222;
+                    color:white;
+                    cursor:pointer;
+                `;
+
+                delBtn.onclick =
+                    async () => {
+
+                        if (
+                            !confirm(
+                                "Delete this message?"
+                            )
+                        ) return;
+
+                        try {
+
+                            await firebaseFunctions
+                                .deleteDoc(
+
+                                    firebaseFunctions.doc(
+                                        firebaseDB,
+                                        "messages",
+                                        messageId
+                                    )
+                                );
+
+                        } catch (err) {
+
+                            console.error(
+                                "Delete failed:",
+                                err
+                            );
+
+                            alert(
+                                "Delete failed. Make sure you are signed in as the admin."
+                            );
+
+                        }
+                    };
+
+                card.appendChild(
+                    delBtn
+                );
+            }
+
+
+            listEl.appendChild(card);
+
+        });
+    }
+
+
+    // ═══════════ FIRESTORE LISTENER ═══════════
+
     firebaseFunctions.onSnapshot(
+
         q,
+
         (snapshot) => {
+
+            latestSnapshot =
+                snapshot;
+
+            renderMessages(
+                snapshot
+            );
+
+        },
+
+        (error) => {
+
+            console.error(
+                "Guest messages listener failed:",
+                error
+            );
 
             listEl.innerHTML = '';
 
-            if (snapshot.empty) {
+            const errorEl =
+                document.createElement(
+                    'p'
+                );
 
-                listEl.appendChild(noMsg);
-                return;
-            }
+            errorEl.textContent =
+                'Unable to load guest messages right now.';
 
-            snapshot.forEach((docSnap) => {
+            errorEl.style.cssText =
+                'color:#FAF3E0; text-align:center;';
 
-                const m = docSnap.data();
-                const messageId = docSnap.id;
-
-                const card =
-                    document.createElement('div');
-
-                card.className =
-                    'guest-message-card';
-
-                card.style.cssText = `
-                    background: linear-gradient(
-                        145deg,
-                        rgba(20,73,58,0.55),
-                        rgba(8,8,8,0.75)
-                    );
-                    border: 1px solid rgba(201,168,76,0.3);
-                    border-radius: 20px;
-                    padding: 24px 20px;
-                    backdrop-filter: blur(10px);
-                    margin-bottom: 20px;
-                    text-align:center;
-                `;
-
-                card.innerHTML = `
-                    <div style="
-                        width:40px;
-                        height:40px;
-                        margin:auto;
-                        border-radius:50%;
-                        background:linear-gradient(
-                            145deg,
-                            #E8C97A,
-                            #C9A84C
-                        );
-                        color:#000;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        font-weight:bold;
-                        margin-bottom:12px;
-                    ">
-                        ${(m.name || '?')
-                            .charAt(0)
-                            .toUpperCase()}
-                    </div>
-
-                    <h4 style="
-                        color:#E8C97A;
-                        margin-bottom:10px;
-                    ">
-                        ${m.name}
-                    </h4>
-
-                    <p style="
-                        color:#FAF3E0;
-                        line-height:1.6;
-                    ">
-                        ${m.message}
-                    </p>
-
-                    <p style="
-                        color:#FAF3E0;
-                        line-height:1.6;
-                    ">
-                        ${timeAgo(m.timestamp)}
-                    </p>
-                `;
-                if (adminMode) {
-
-    const delBtn =
-        document.createElement(
-            "button"
-        );
-
-    delBtn.innerHTML =
-        "🗑 Delete";
-
-    delBtn.style.cssText = `
-        margin-top:12px;
-        padding:8px 16px;
-        border:none;
-        border-radius:20px;
-        background:#b22222;
-        color:white;
-        cursor:pointer;
-    `;
-
-    delBtn.onclick =
-    async () => {
-
-        if (
-            !confirm(
-                "Delete this message?"
-            )
-        ) return;
-
-        try {
-
-            await firebaseFunctions
-            .deleteDoc(
-
-                firebaseFunctions.doc(
-                    firebaseDB,
-                    "messages",
-                    messageId
-                )
+            listEl.appendChild(
+                errorEl
             );
 
-        } catch(err){
-
-            console.error(err);
-
-            alert(
-                "Delete failed"
-            );
-        }
-    };
-
-    card.appendChild(delBtn);
-}
-                listEl.appendChild(card);
-            });
         }
     );
 
