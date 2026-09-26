@@ -10,33 +10,32 @@
     <link rel="stylesheet" href="style.css">
     <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-
     import {
-        getFirestore,
-        collection,
-        addDoc,
-        query,
-        orderBy,
-        onSnapshot,
-        serverTimestamp,
-        deleteDoc,
-        doc
+    getFirestore,
+    collection,
+    addDoc,
+    query,
+    orderBy,
+    onSnapshot,
+    serverTimestamp,
+    deleteDoc,
+    updateDoc,
+    doc
     } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
     import {
-        getAuth,
-        signInWithEmailAndPassword,
-        signOut,
-        onAuthStateChanged
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
     const firebaseConfig = {
-        apiKey: "AIzaSyCKkC8c7NW4CbaKQvf2WV0L2n1u8lT-DPU",
-        authDomain: "nizams-wedding.firebaseapp.com",
-        projectId: "nizams-wedding",
-        storageBucket: "nizams-wedding.firebasestorage.app",
-        messagingSenderId: "838784406552",
-        appId: "1:838784406552:web:e84bc250743e72d62ddf6d"
+    apiKey: "AIzaSyCKkC8c7NW4CbaKQvf2WV0L2n1u8lT-DPU",
+    authDomain: "nizams-wedding.firebaseapp.com",
+    projectId: "nizams-wedding",
+    storageBucket: "nizams-wedding.firebasestorage.app",
+    messagingSenderId: "838784406552",
+    appId: "1:838784406552:web:e84bc250743e72d62ddf6d"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -45,24 +44,26 @@
 
     window.firebaseDB = db;
     window.firebaseAuth = auth;
-
     window.firebaseFunctions = {
-        collection,
-        addDoc,
-        query,
-        orderBy,
-        onSnapshot,
-        serverTimestamp,
-        deleteDoc,
-        doc,
-        signInWithEmailAndPassword,
-        signOut,
-        onAuthStateChanged
+    collection,
+    addDoc,
+    query,
+    orderBy,
+    onSnapshot,
+    serverTimestamp,
+    deleteDoc,
+    updateDoc,
+    doc,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
     };
-</script>
+    </script>
+    <script>window.RSVP_EMAIL_WEBHOOK = "";</script>
     <script src="script.js" defer></script>
 </head>
 <body class="overflow-x-hidden">
+    <div id="network-status-banner" role="status" aria-live="polite"></div>
 
     <!-- ═══════════════════════════════════════════════════════════
          ROYAL WELCOME GATE (SPLASH SCREEN)
@@ -615,18 +616,29 @@
             <p class="heading" style="font-size: 13px; color: var(--gold); letter-spacing: 4px;">WITH JOY IN OUR HEARTS</p>
             <h3 class="heading" style="font-size: 36px; margin-top: 4px; margin-bottom: 24px;">RSVP</h3>
 
-            <form id="rsvp-form" style="display: flex; flex-direction: column; gap: 14px;">
+            <form id="rsvp-form" style="display: flex; flex-direction: column; gap: 14px;" novalidate>
+                <input id="rsvp-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" type="text">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <input type="text" placeholder="Full Name" style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif;">
-                    <input type="tel" placeholder="Phone Number" style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif;">
+                    <input id="rsvp-name" name="name" type="text" maxlength="80" placeholder="Full Name" required autocomplete="name" style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif;">
+                    <input id="rsvp-phone" name="phone" type="tel" maxlength="25" placeholder="Phone Number" required autocomplete="tel" style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif;">
                 </div>
-                <select style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif; width: 100%;">
-                    <option>Attending Nikah (Dec 18)</option>
-                    <option>Attending Nikah (Dec 21)</option>
-                    <option>Attending Valima (Dec 23)</option>
-                    <option selected>Attending All Events</option>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                    <select id="rsvp-guests" name="guests" required style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif; width: 100%;">
+                        <option value="1" selected>1 Guest</option><option value="2">2 Guests</option><option value="3">3 Guests</option><option value="4">4 Guests</option><option value="5">5 Guests</option><option value="6">6 Guests</option><option value="7">7 Guests</option><option value="8">8 Guests</option><option value="9">9 Guests</option><option value="10">10 Guests</option>
+                    </select>
+                    <select id="rsvp-status" name="status" required style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif; width: 100%;">
+                        <option value="attending" selected>Attending</option><option value="declined">Not Attending</option>
+                    </select>
+                </div>
+                <select id="rsvp-attendance" name="attendance" required style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif; width: 100%;">
+                    <option value="Attending Nikah (Dec 18)">Attending Nikah (Dec 18)</option>
+                    <option value="Attending Nikah (Dec 21)">Attending Nikah (Dec 21)</option>
+                    <option value="Attending Valima (Dec 23)">Attending Valima (Dec 23)</option>
+                    <option value="Attending All Events" selected>Attending All Events</option>
                 </select>
-                <button type="button" onclick="submitRSVP()" style="margin-top: 8px; width: 100%; padding: 16px; background: var(--gold); color: var(--black); font-weight: 700; font-size: 14px; letter-spacing: 3px; border: none; border-radius: 14px; cursor: pointer; font-family: 'Cormorant Garamond', serif; transition: all 0.3s ease;">
+                <textarea id="rsvp-message" name="message" maxlength="300" rows="3" placeholder="Optional message" style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,76,0.3); padding: 14px 18px; border-radius: 14px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Cormorant Garamond', serif; resize:vertical;"></textarea>
+                <p id="rsvp-status-message" class="rsvp-status-message" role="status" aria-live="polite"></p>
+                <button id="rsvp-submit" type="submit" style="margin-top: 8px; width: 100%; padding: 16px; background: var(--gold); color: var(--black); font-weight: 700; font-size: 14px; letter-spacing: 3px; border: none; border-radius: 14px; cursor: pointer; font-family: 'Cormorant Garamond', serif; transition: all 0.3s ease;">
                     ACCEPT WITH BLESSINGS
                 </button>
             </form>
@@ -690,7 +702,7 @@
     <!-- ═══════ FLOATING AUDIO ═══════ -->
     <!-- 
         TO ADD YOUR OWN AUDIO:
-        1. Keep your song file beside this HTML and name it "Jhilmil-Sitaron.mp3"
+        1. Keep your song file beside this HTML and name it "Jhilmil Sitaron.mp3"
            OR replace "Jhilmil-Sitaron.mp3" below with your audio file path
         2. Supported formats: MP3, WAV, OGG
         3. Example paths: "audio/nasheed.mp3" or "https://example.com/music.mp3"
@@ -716,6 +728,45 @@
     </div>
     <style>@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }</style>
 
+
+    <!-- ═══════ ADMIN CONSOLE ═══════ -->
+    <div id="admin-console" class="admin-console" aria-hidden="true">
+      <div class="admin-console-backdrop" data-admin-close></div>
+      <div class="admin-console-panel" role="dialog" aria-modal="true" aria-labelledby="admin-console-title">
+        <div class="admin-console-head"><div><p class="admin-kicker">NIZAM'S WEDDING</p><h2 id="admin-console-title" class="heading">Admin Console</h2><span id="admin-auth-state" class="admin-auth-state">Signed out</span></div><button class="admin-icon-btn" type="button" data-admin-close aria-label="Close">×</button></div>
+        <div id="admin-login-view" class="admin-view">
+          <p class="admin-muted">Sign in with your Firebase admin account.</p>
+          <input id="admin-email" type="email" placeholder="Admin email" autocomplete="username">
+          <input id="admin-password" type="password" placeholder="Password" autocomplete="current-password">
+          <button id="admin-login-btn" class="admin-primary-btn" type="button">SIGN IN</button>
+          <p id="admin-login-error" class="admin-error" role="alert"></p>
+        </div>
+        <div id="admin-dashboard-view" class="admin-view" hidden>
+          <div class="admin-stats" id="admin-stats"></div>
+          <div class="admin-tabs"><button class="admin-tab active" data-admin-tab="messages">Messages</button><button class="admin-tab" data-admin-tab="rsvps">RSVPs</button></div>
+          <div id="admin-messages-view" class="admin-tab-view">
+            <div class="admin-toolbar"><input id="admin-message-search" placeholder="Search messages…"><select id="admin-message-sort"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></div>
+            <div class="admin-subtoolbar"><button id="admin-show-hidden" class="admin-small-btn" type="button">Show hidden</button><button id="admin-show-all" class="admin-small-btn" type="button">Show all</button></div>
+            <div id="admin-messages-list" class="admin-record-list"></div>
+          </div>
+          <div id="admin-rsvps-view" class="admin-tab-view" hidden>
+            <div class="admin-toolbar"><input id="admin-rsvp-search" placeholder="Search RSVP…"><select id="admin-rsvp-filter"><option value="all">All</option><option value="attending">Confirmed</option><option value="declined">Declined</option></select></div>
+            <div class="admin-subtoolbar"><button id="admin-export-rsvps" class="admin-small-btn" type="button">Export CSV</button><button id="admin-refresh-rsvps" class="admin-small-btn" type="button">Refresh</button></div>
+            <div id="admin-rsvps-list" class="admin-record-list"></div>
+          </div>
+          <button id="admin-logout-btn" class="admin-logout-btn" type="button">SIGN OUT</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ GALLERY LIGHTBOX ═══════ -->
+    <div id="gallery-lightbox" class="gallery-lightbox" aria-hidden="true">
+      <button id="gallery-close" class="lightbox-close" type="button" aria-label="Close gallery">×</button>
+      <button id="gallery-prev" class="lightbox-nav prev" type="button" aria-label="Previous image">‹</button>
+      <img id="gallery-lightbox-image" src="" alt="" decoding="async">
+      <button id="gallery-next" class="lightbox-nav next" type="button" aria-label="Next image">›</button>
+      <div id="gallery-lightbox-caption" class="lightbox-caption"></div>
+    </div>
 
     <!-- ═══════ FIREWORKS OVERLAY ═══════ -->
     <div id="fireworks-container" style="display:none; position:fixed; inset:0; z-index:100; background:rgba(0,0,0,0.92); align-items:center; justify-content:center;">
