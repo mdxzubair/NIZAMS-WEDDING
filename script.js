@@ -981,6 +981,164 @@ function launchFireworks(){const canvas=document.getElementById('fireworks-canva
     })();
 
 
+
+// ═══════════ LIVE VISITOR COUNTER ═══════════
+(function(){
+    const display = document.getElementById('visitor-count');
+    const adminCurrent = document.getElementById('admin-visitor-current');
+    const adminActual = document.getElementById('admin-visitor-actual');
+    const adminInput = document.getElementById('admin-visitor-count');
+    const adminSet = document.getElementById('admin-visitor-set');
+    const adminReset = document.getElementById('admin-visitor-reset');
+    const adminStatus = document.getElementById('admin-visitor-status');
+    if (!display || !window.firebaseDB || !window.firebaseFunctions) return;
+
+    const counterRef = firebaseFunctions.doc(firebaseDB, 'siteStats', 'visitorCounter');
+    const ADMIN_UID = 'TyGIV4xQbESrne5q0FGWO7nqf022';
+    let currentValue = null;
+
+    function cleanCount(value){
+        const n = Number(value);
+        return Number.isFinite(n) ? Math.max(0, Math.floor(n)) : 0;
+    }
+
+    function renderCount(value, animate = true){
+        const next = String(cleanCount(value));
+        const previous = currentValue === null ? null : String(cleanCount(currentValue));
+        if (previous === next && display.dataset.value === next) {
+            if (adminCurrent) adminCurrent.textContent = next;
+            return;
+        }
+
+        const maxLen = Math.max(previous?.length || 0, next.length, 1);
+        const oldPadded = (previous ?? '').padStart(maxLen, ' ');
+        const nextPadded = next.padStart(maxLen, ' ');
+
+        display.innerHTML = '';
+        display.dataset.value = next;
+        display.setAttribute('aria-label', `${next} visitors`);
+
+        [...nextPadded].forEach((digit, index) => {
+            const oldDigit = oldPadded[index] || ' ';
+            const slot = document.createElement('span');
+            slot.className = 'visitor-digit-slot';
+
+            if (!animate || previous === null || oldDigit === digit) {
+                const staticDigit = document.createElement('span');
+                staticDigit.className = 'visitor-digit-static';
+                staticDigit.textContent = digit === ' ' ? '' : digit;
+                slot.appendChild(staticDigit);
+            } else {
+                const oldEl = document.createElement('span');
+                oldEl.className = 'visitor-digit-old';
+                oldEl.textContent = oldDigit === ' ' ? '' : oldDigit;
+
+                const newEl = document.createElement('span');
+                newEl.className = 'visitor-digit-new';
+                newEl.textContent = digit === ' ' ? '' : digit;
+
+                slot.append(oldEl, newEl);
+                requestAnimationFrame(() => slot.classList.add('is-rolling'));
+            }
+
+            display.appendChild(slot);
+        });
+
+        currentValue = cleanCount(value);
+        if (adminCurrent) adminCurrent.textContent = String(currentValue);
+    }
+
+    function setAdminStatus(message, type){
+        if (!adminStatus) return;
+        adminStatus.textContent = message || '';
+        adminStatus.className = 'admin-visitor-status' + (type ? ` ${type}` : '');
+    }
+
+    firebaseFunctions.onSnapshot(counterRef, (snap) => {
+        const value = snap.exists() ? cleanCount(snap.data().count) : 0;
+        const actual = snap.exists() ? cleanCount(snap.data().actualCount ?? value) : 0;
+        renderCount(value, currentValue !== null);
+        if (adminActual) adminActual.textContent = String(actual);
+    }, (error) => {
+        console.error('Visitor counter listener failed:', error);
+    });
+
+    async function incrementForVisitor(){
+        try {
+            if (sessionStorage.getItem('nizam_visitor_counted') === '1') return;
+        } catch (_) {}
+
+        try {
+            await firebaseFunctions.runTransaction(firebaseDB, async (tx) => {
+                const snap = await tx.get(counterRef);
+                const current = snap.exists() ? cleanCount(snap.data().count) : 0;
+                const actual = snap.exists() ? cleanCount(snap.data().actualCount ?? current) : 0;
+                tx.set(counterRef, {
+                    count: current + 1,
+                    actualCount: actual + 1,
+                    updatedAt: firebaseFunctions.serverTimestamp()
+                }, { merge: true });
+            });
+
+            try { sessionStorage.setItem('nizam_visitor_counted', '1'); } catch (_) {}
+        } catch (error) {
+            console.error('Visitor counter update failed:', error);
+        }
+    }
+
+    async function setAdminCount(value){
+        const user = firebaseAuth?.currentUser;
+        if (!user || user.uid !== ADMIN_UID) {
+            setAdminStatus('Admin authentication required.', 'error');
+            return;
+        }
+
+        const count = cleanCount(value);
+        setAdminStatus('Updating…', 'loading');
+        if (adminSet) adminSet.disabled = true;
+        if (adminReset) adminReset.disabled = true;
+
+        try {
+            await firebaseFunctions.runTransaction(firebaseDB, async (tx) => {
+                tx.set(counterRef, {
+                    count,
+                    updatedAt: firebaseFunctions.serverTimestamp()
+                }, { merge: true });
+            });
+            setAdminStatus(`Live count set to ${count}.`, 'success');
+        } catch (error) {
+            console.error('Admin visitor count update failed:', error);
+            setAdminStatus('Could not update the visitor count.', 'error');
+        } finally {
+            if (adminSet) adminSet.disabled = false;
+            if (adminReset) adminReset.disabled = false;
+        }
+    }
+
+    adminSet?.addEventListener('click', () => {
+        if (!adminInput?.value.trim()) {
+            setAdminStatus('Enter a count first.', 'error');
+            return;
+        }
+        setAdminCount(adminInput.value);
+    });
+
+    adminInput?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') adminSet?.click();
+    });
+
+    adminReset?.addEventListener('click', () => {
+        if (confirm('Reset the live visitor count to 0?')) setAdminCount(0);
+    });
+
+    firebaseFunctions.onAuthStateChanged(firebaseAuth, (user) => {
+        const isAdmin = user?.uid === ADMIN_UID;
+        if (!isAdmin && adminStatus) setAdminStatus('');
+    });
+
+    incrementForVisitor();
+})();
+
 // ═══════════ PREMIUM ADMIN CONSOLE ═══════════
 (function(){const el=document.getElementById('admin-console');if(!el)return;const login=document.getElementById('admin-login-view'),dash=document.getElementById('admin-dashboard-view'),email=document.getElementById('admin-email'),pass=document.getElementById('admin-password'),err=document.getElementById('admin-login-error'),stats=document.getElementById('admin-stats'),ml=document.getElementById('admin-messages-list'),rl=document.getElementById('admin-rsvps-list');const UID='TyGIV4xQbESrne5q0FGWO7nqf022';let messages=[],rsvps=[];function open(){el.classList.add('open');el.setAttribute('aria-hidden','false');setTimeout(()=>email?.focus(),50)}function close(){el.classList.remove('open');el.setAttribute('aria-hidden','true')}document.querySelectorAll('[data-admin-close]').forEach(x=>x.onclick=close);document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});function auth(user){const ok=user?.uid===UID;login.hidden=ok;dash.hidden=!ok;document.getElementById('admin-auth-state').textContent=ok?'Authenticated admin':'Signed out';if(ok)load()}document.getElementById('admin-login-btn')?.addEventListener('click',async()=>{err.textContent='';try{const c=await firebaseFunctions.signInWithEmailAndPassword(firebaseAuth,email.value.trim(),pass.value);if(c.user.uid!==UID){await firebaseFunctions.signOut(firebaseAuth);throw 0}pass.value=''}catch(e){err.textContent='Sign in failed. Check your admin account.'}});pass?.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('admin-login-btn').click()});document.getElementById('admin-logout-btn')?.addEventListener('click',()=>firebaseFunctions.signOut(firebaseAuth));const t=document.getElementById('guest-messages-title');let n=0,tm;t?.addEventListener('click',()=>{n++;clearTimeout(tm);tm=setTimeout(()=>n=0,1500);if(n>=5){n=0;open()}});firebaseFunctions.onAuthStateChanged(firebaseAuth,auth);function dt(x){return x?.toDate?x.toDate():new Date(x||0)}function esc(x){const d=document.createElement('div');d.textContent=String(x??'');return d.innerHTML}function load(){const mq=firebaseFunctions.query(firebaseFunctions.collection(firebaseDB,'messages'),firebaseFunctions.orderBy('timestamp','desc'));firebaseFunctions.onSnapshot(mq,s=>{messages=s.docs.map(d=>({id:d.id,...d.data()}));renderM();renderS()});const rq=firebaseFunctions.query(firebaseFunctions.collection(firebaseDB,'rsvps'),firebaseFunctions.orderBy('timestamp','desc'));firebaseFunctions.onSnapshot(rq,s=>{rsvps=s.docs.map(d=>({id:d.id,...d.data()}));renderR();renderS()},()=>{rsvps=[];renderR()})}function renderS(){const d=new Date();d.setHours(0,0,0,0);const today=messages.filter(m=>dt(m.timestamp)>=d).length,confirmed=rsvps.filter(r=>r.status==='attending').length,declined=rsvps.filter(r=>r.status==='declined').length,guests=rsvps.filter(r=>r.status==='attending').reduce((a,r)=>a+(+r.guests||0),0);stats.innerHTML=`<div><b>${messages.length}</b><span>Total messages</span></div><div><b>${today}</b><span>Today's messages</span></div><div><b>${rsvps.length}</b><span>Total RSVPs</span></div><div><b>${confirmed}</b><span>Confirmed</span></div><div><b>${declined}</b><span>Declined</span></div><div><b>${guests}</b><span>Guests</span></div>`; let ctl=document.getElementById('admin-invited-control'); if(!ctl){ctl=document.createElement('div');ctl.id='admin-invited-control';ctl.className='admin-invited-control';stats.after(ctl)} const invited=Number(localStorage.getItem('nizam_total_invited')||0); const pending=invited?Math.max(0,invited-confirmed-declined):'—'; ctl.innerHTML=`<label>Total invited <input id=admin-total-invited type=number min=0 value="${invited||''}" placeholder="Enter total invited"></label><span>Pending: <b>${pending}</b></span>`;document.getElementById('admin-total-invited')?.addEventListener('change',e=>{localStorage.setItem('nizam_total_invited',String(Math.max(0,Number(e.target.value)||0)));renderS()})}function renderM(){let q=(document.getElementById('admin-message-search')?.value||'').toLowerCase();let a=messages.filter(m=>(`${m.name||''} ${m.message||''}`).toLowerCase().includes(q));if(document.getElementById('admin-message-sort')?.value==='oldest')a.reverse();ml.innerHTML=a.map(m=>`<article class="admin-record ${m.hidden?'is-hidden':''}"><div><strong>${esc(m.name||'Guest')}</strong><small>${dt(m.timestamp).toLocaleString()}</small><p>${esc(m.message||'')}</p></div><div class="admin-record-actions"><button class="admin-small-btn" data-h="${m.id}">${m.hidden?'Restore':'Hide'}</button><button class="admin-danger-btn" data-d="${m.id}">Delete</button></div></article>`).join('')||'<p class="admin-muted">No messages found.</p>';ml.querySelectorAll('[data-h]').forEach(b=>b.onclick=async()=>{const m=messages.find(x=>x.id===b.dataset.h);if(m)await firebaseFunctions.updateDoc(firebaseFunctions.doc(firebaseDB,'messages',m.id),{hidden:!m.hidden})});ml.querySelectorAll('[data-d]').forEach(b=>b.onclick=async()=>{if(confirm('Permanently delete this message?'))await firebaseFunctions.deleteDoc(firebaseFunctions.doc(firebaseDB,'messages',b.dataset.d))})}function renderR(){let q=(document.getElementById('admin-rsvp-search')?.value||'').toLowerCase(),f=document.getElementById('admin-rsvp-filter')?.value||'all';let a=rsvps.filter(r=>(f==='all'||r.status===f)&&(`${r.name||''} ${r.attendance||''}`).toLowerCase().includes(q));rl.innerHTML=a.map(r=>`<article class="admin-record"><div><strong>${esc(r.name||'Guest')}</strong><small>${dt(r.timestamp).toLocaleString()}</small><p>${esc(r.status||'pending')} • ${+r.guests||0} guest(s) • ${esc(r.attendance||'')}</p>${r.message?`<p>“${esc(r.message)}”</p>`:''}</div><button class="admin-danger-btn" data-rd="${r.id}">Delete</button></article>`).join('')||'<p class="admin-muted">No RSVPs found.</p>';rl.querySelectorAll('[data-rd]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this RSVP?'))await firebaseFunctions.deleteDoc(firebaseFunctions.doc(firebaseDB,'rsvps',b.dataset.rd))})}document.getElementById('admin-message-search')?.addEventListener('input',renderM);document.getElementById('admin-message-sort')?.addEventListener('change',renderM);document.getElementById('admin-rsvp-search')?.addEventListener('input',renderR);document.getElementById('admin-rsvp-filter')?.addEventListener('change',renderR);document.querySelectorAll('[data-admin-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-admin-tab]').forEach(x=>x.classList.remove('active'));b.classList.add('active');const r=b.dataset.adminTab==='rsvps';document.getElementById('admin-messages-view').hidden=r;document.getElementById('admin-rsvps-view').hidden=!r});document.getElementById('admin-export-rsvps')?.addEventListener('click',()=>{const cols=['name','guests','status','attendance','message','timestamp'],csv=[cols.join(','),...rsvps.map(r=>cols.map(c=>`"${String(c==='timestamp'?dt(r[c]).toISOString():r[c]??'').replace(/"/g,'""')}"`).join(','))].join('\n'),blob=new Blob([csv],{type:'text/csv'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='nizams-rsvps.csv';a.click();URL.revokeObjectURL(u)});})();
 
