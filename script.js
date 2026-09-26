@@ -259,7 +259,205 @@ function closeFireworks(){document.getElementById('fireworks-container').style.d
 function launchFireworks(){const canvas=document.getElementById('fireworks-canvas');if(!canvas)return;const ctx=canvas.getContext('2d');canvas.width=innerWidth;canvas.height=innerHeight;let sparks=[];const colors=['#C9A84C','#E8C97A','#FAF3E0','#8B6914','#FFFFFF','#1A5C45'];function burst(x,y){for(let i=0;i<80;i++){const a=Math.random()*Math.PI*2,sp=Math.random()*6+1.5;sparks.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:Math.random()*60+50,color:colors[Math.floor(Math.random()*colors.length)],size:Math.random()*3+1.5});}}for(let i=0;i<5;i++)setTimeout(()=>burst(canvas.width*.15+Math.random()*canvas.width*.7,canvas.height*.15+Math.random()*canvas.height*.45),i*350);if(window._fwInt)clearInterval(window._fwInt);window._fwInt=setInterval(()=>{ctx.fillStyle='rgba(0,0,0,.18)';ctx.fillRect(0,0,canvas.width,canvas.height);sparks=sparks.filter(s=>s.life>0);sparks.forEach(s=>{s.x+=s.vx;s.y+=s.vy;s.vy+=.04;s.vx*=.99;s.life--;ctx.globalAlpha=Math.max(0,s.life/100);ctx.fillStyle=s.color;ctx.beginPath();ctx.arc(s.x,s.y,s.size,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;if(!sparks.length){clearInterval(window._fwInt);ctx.clearRect(0,0,canvas.width,canvas.height);}},16);}
 
 
-    // ═══════════ RESPONSIVE GRID FIX ═══════════
+// ═══════════ VISITOR COUNTER — CONTINUOUS WEDDING CELEBRATION ═══════════
+(function(){
+    const canvas = document.getElementById('visitor-celebration-canvas');
+    const box = document.getElementById('visitor-counter');
+    if(!canvas || !box) return;
+
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduceMotion) return;
+
+    const ctx = canvas.getContext('2d');
+    if(!ctx) return;
+
+    let width = 0, height = 0, dpr = 1, raf = 0, lastTime = 0;
+    let bursts = [];
+    let particles = [];
+    let rockets = [];
+    let nextBurstAt = 0;
+    let burstCount = 0;
+
+    const colors = ['#C9A84C','#E8C97A','#FAF3E0','#D4B85A','#FFFFFF','#8B6914'];
+
+    function resize(){
+        const rect = box.getBoundingClientRect();
+        width = Math.max(1, rect.width);
+        height = Math.max(1, rect.height);
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+
+    // The center 46% of the box is deliberately protected for the visitor number.
+    function sidePoint(side){
+        const left = side === 'left';
+        const minX = left ? width * .08 : width * .75;
+        const maxX = left ? width * .25 : width * .92;
+        return {
+            x: minX + Math.random() * (maxX - minX),
+            y: height * (.30 + Math.random() * .40)
+        };
+    }
+
+    function createBurst(side){
+        const p = sidePoint(side);
+        const mobile = width < 420;
+        const count = mobile ? 34 : 52;
+        const maxRadius = mobile ? 20 : 30;
+
+        bursts.push({x:p.x,y:p.y,life:0,maxLife:22});
+
+        // Bright radial "cracker" spokes.
+        for(let i=0;i<count;i++){
+            const angle = Math.random() * Math.PI * 2;
+            const speed = (mobile ? .95 : 1.2) + Math.random() * (mobile ? 2.0 : 2.8);
+            particles.push({
+                x:p.x, y:p.y,
+                vx:Math.cos(angle)*speed,
+                vy:Math.sin(angle)*speed,
+                life:34 + Math.random()*34,
+                maxLife:68,
+                size:.75 + Math.random()*1.8,
+                color:colors[(Math.random()*colors.length)|0],
+                gravity:.020 + Math.random()*.025,
+                trail:true
+            });
+        }
+
+        // A few slower glowing embers make the burst feel fuller.
+        for(let i=0;i<8;i++){
+            const angle = Math.random() * Math.PI * 2;
+            const speed = .35 + Math.random()*.8;
+            particles.push({
+                x:p.x, y:p.y,
+                vx:Math.cos(angle)*speed,
+                vy:Math.sin(angle)*speed,
+                life:55 + Math.random()*35,
+                maxLife:90,
+                size:.8 + Math.random()*1.2,
+                color:'#E8C97A',
+                gravity:.012 + Math.random()*.012,
+                trail:false
+            });
+        }
+
+        // Keep a tiny flash only at the burst origin, never over the number area.
+        const flashRadius = Math.min(maxRadius, 10 + Math.random()*8);
+        bursts[bursts.length-1].flashRadius = flashRadius;
+    }
+
+    function scheduleNext(now){
+        // Continuous forever: no multi-second empty gaps.
+        // Every burst is independent of the visitor count.
+        const delay = 620 + Math.random()*520;
+        nextBurstAt = now + delay;
+    }
+
+    function draw(now){
+        if(!lastTime) lastTime = now;
+        const dt = Math.min(2, (now-lastTime)/16.67);
+        lastTime = now;
+
+        ctx.clearRect(0,0,width,height);
+
+        // Burst flashes / radial spokes.
+        bursts = bursts.filter(b => {
+            b.life += dt;
+            const progress = b.life / b.maxLife;
+            const alpha = Math.max(0,1-progress);
+
+            ctx.save();
+            ctx.globalAlpha = alpha * .9;
+            ctx.strokeStyle = '#E8C97A';
+            ctx.lineWidth = 1;
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = '#E8C97A';
+
+            for(let i=0;i<10;i++){
+                const angle = i * Math.PI/5;
+                const r1 = 2 + progress * 3;
+                const r2 = Math.min(34,width*.12) * progress + 4;
+                ctx.beginPath();
+                ctx.moveTo(b.x+Math.cos(angle)*r1,b.y+Math.sin(angle)*r1);
+                ctx.lineTo(b.x+Math.cos(angle)*r2,b.y+Math.sin(angle)*r2);
+                ctx.stroke();
+            }
+
+            ctx.globalAlpha = alpha * .75;
+            ctx.fillStyle = '#FAF3E0';
+            ctx.beginPath();
+            ctx.arc(b.x,b.y,Math.max(1,b.flashRadius*(1-progress)),0,Math.PI*2);
+            ctx.fill();
+            ctx.restore();
+
+            return b.life < b.maxLife;
+        });
+
+        // Particle sparks with short trails.
+        particles = particles.filter(p => {
+            const oldX = p.x;
+            const oldY = p.y;
+            p.x += p.vx * dt;
+            p.y += p.vy * dt;
+            p.vy += p.gravity * dt;
+            p.vx *= Math.pow(.985,dt);
+            p.life -= dt;
+            if(p.life <= 0) return false;
+
+            const alpha = Math.min(1,p.life/20) * .95;
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.fillStyle = p.color;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = p.color;
+
+            if(p.trail){
+                ctx.strokeStyle = p.color;
+                ctx.lineWidth = Math.max(.45,p.size*.65);
+                ctx.beginPath();
+                ctx.moveTo(oldX,oldY);
+                ctx.lineTo(p.x,p.y);
+                ctx.stroke();
+            }
+
+            ctx.beginPath();
+            ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+            ctx.fill();
+            ctx.restore();
+            return true;
+        });
+
+        // Launch a side cracker, then explode it shortly afterward.
+        if(now >= nextBurstAt){
+            const side = (burstCount++ % 2 === 0) ? 'left' : 'right';
+            createBurst(side);
+
+            // Sometimes make a celebratory paired burst on the opposite side.
+            if(Math.random() < .38){
+                setTimeout(() => createBurst(side === 'left' ? 'right' : 'left'), 210);
+            }
+
+            scheduleNext(now);
+        }
+
+        raf = requestAnimationFrame(draw);
+    }
+
+    resize();
+    window.addEventListener('resize', resize, {passive:true});
+    nextBurstAt = performance.now() + 350;
+    raf = requestAnimationFrame(draw);
+
+    window.addEventListener('beforeunload', () => cancelAnimationFrame(raf), {once:true});
+})();
+
+
+    
+// ═══════════ RESPONSIVE GRID FIX ═══════════
     (function(){
         function fixGrids() {
             // Only target inline-style grids, not CSS-class-based grids
