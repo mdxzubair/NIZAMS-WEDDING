@@ -257,14 +257,14 @@ body {
 
         /* Section decorative line */
         .section-line {
-            width: 100px; height: 1px; margin: 16px auto 0;
+            width: 200px; height: 3px; margin: 16px auto 0;
             background: linear-gradient(90deg, transparent, #8B6914, #C9A84C, #E8C97A, #C9A84C, #8B6914, transparent);
             position: relative;
         }
         .section-line::after {
             content: '✦'; position: absolute; left: 50%; top: 50%;
             transform: translate(-50%,-50%); color: #E8C97A;
-            font-size: 12px; background: transparent; padding: 0 10px;
+            font-size: 25px; background: transparent; padding: 0 10px;
             text-shadow: 0 0 10px rgba(232,201,122,0.5);
         }
 
