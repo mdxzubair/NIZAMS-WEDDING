@@ -1361,3 +1361,84 @@ main {
     width: 100%;
     min-width: 0;
 }
+
+
+/* Gallery lightbox zoom and touch support */
+.gallery-lightbox{overflow:hidden;touch-action:pan-y}
+.lightbox-image-stage{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%;overflow:hidden;touch-action:none;cursor:grab}
+.lightbox-image-stage:active{cursor:grabbing}
+.gallery-lightbox .lightbox-image-stage img{display:block;max-width:min(90vw,1200px);max-height:82vh;width:auto;height:auto;object-fit:contain;border-radius:12px;box-shadow:0 30px 100px rgba(0,0,0,.65);touch-action:none;user-select:none;-webkit-user-drag:none;transform-origin:center center;will-change:transform}
+.lightbox-zoom-controls{position:absolute;z-index:2;top:22px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:6px;border:1px solid rgba(201,168,76,.25);border-radius:999px;background:rgba(5,5,5,.72);backdrop-filter:blur(10px)}
+.lightbox-zoom-controls button{min-width:38px;height:34px;padding:0 10px;border:0;border-radius:999px;background:rgba(201,168,76,.1);color:var(--cream);font:inherit;font-size:20px;cursor:pointer}
+.lightbox-zoom-controls button:hover{background:rgba(201,168,76,.25)}
+.lightbox-zoom-controls #gallery-zoom-reset{font-size:12px;letter-spacing:1px}
+.gallery-lightbox.zoomed .lightbox-nav{opacity:.45}
+@media(max-width:760px){.gallery-lightbox .lightbox-image-stage img{max-width:92vw;max-height:75vh}.lightbox-zoom-controls{top:16px}.lightbox-zoom-controls button{min-width:34px;height:32px}.lightbox-close{top:16px;right:12px;z-index:3}.lightbox-nav{z-index:2}}
+@media(max-width:520px){.gallery-lightbox .lightbox-image-stage img{max-height:70vh}.lightbox-zoom-controls{top:auto;bottom:68px}.lightbox-caption{bottom:22px;max-width:85vw}}
+
+
+/* Reliable gallery controls and zoom surface */
+#gallery-lightbox{z-index:10060;isolation:isolate}
+#gallery-lightbox .lightbox-image-stage{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none}
+#gallery-lightbox #gallery-lightbox-image{pointer-events:none;user-select:none;-webkit-user-drag:none;transform-origin:center center;will-change:transform}
+#gallery-lightbox #gallery-close,
+#gallery-lightbox #gallery-prev,
+#gallery-lightbox #gallery-next,
+#gallery-lightbox .lightbox-zoom-controls{position:absolute;pointer-events:auto;z-index:10}
+#gallery-lightbox #gallery-close{top:22px;right:22px}
+#gallery-lightbox #gallery-prev{left:18px}
+#gallery-lightbox #gallery-next{right:18px}
+#gallery-lightbox .lightbox-zoom-controls{top:22px;left:50%;transform:translateX(-50%)}
+#gallery-lightbox .lightbox-caption{z-index:8;pointer-events:none}
+#gallery-lightbox.zoomed .lightbox-nav{opacity:.85}
+#gallery-lightbox .lightbox-nav,#gallery-lightbox .lightbox-close,#gallery-lightbox .lightbox-zoom-controls button{touch-action:manipulation}
+@media(max-width:600px){
+ #gallery-lightbox .lightbox-nav{width:38px;height:58px;font-size:36px}
+ #gallery-lightbox #gallery-prev{left:6px}
+ #gallery-lightbox #gallery-next{right:6px}
+ #gallery-lightbox #gallery-close{top:12px;right:12px}
+ #gallery-lightbox .lightbox-zoom-controls{top:12px}
+}
+.scratch-section.all-events-revealed .scratch-sub-label{
+ color:#FFF4C7!important;opacity:1!important;visibility:visible!important;
+ text-shadow:0 0 4px #4A2D00,0 0 9px #C9A84C,0 0 18px #E8C97A,0 0 30px rgba(255,211,105,.95);
+ font-weight:700;
+}
+
+
+/* Scratch celebration: small effects stay inside their circles; EVENT 3 spans the viewport. */
+.scratch-celebration-canvas.local{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;border-radius:50%;display:block;opacity:1}
+.scratch-celebration-canvas.fullscreen{position:fixed;left:0;top:0;right:auto;bottom:auto;width:100%;height:100%;max-width:none;z-index:10080;pointer-events:none;border-radius:0;display:block;opacity:1;overflow:hidden}
+.scratch-celebration-canvas.finished{opacity:0;transition:opacity .25s ease}
+.scratch-section.all-events-revealed .scratch-sub-label{
+ color:#FFF4C7!important;opacity:1!important;visibility:visible!important;
+ text-shadow:0 0 4px #4A2D00,0 0 9px #C9A84C,0 0 18px #E8C97A,0 0 30px rgba(255,211,105,.95);
+ font-weight:700;
+}
+.scratch-section.all-events-revealed .scratch-outer::before{
+ content:"";position:absolute;z-index:-1;width:125%;aspect-ratio:1;left:50%;top:40%;
+ transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
+ background:radial-gradient(circle,rgba(255,211,105,.42) 0%,rgba(232,190,85,.22) 30%,rgba(201,168,76,.09) 52%,rgba(201,168,76,0) 72%);
+ filter:blur(13px);opacity:.95;animation:scratchGoldenGlow 2.8s ease-in-out infinite alternate;
+}
+@keyframes scratchGoldenGlow{from{opacity:.62;filter:blur(11px);transform:translate(-50%,-50%) scale(.96)}to{opacity:1;filter:blur(17px);transform:translate(-50%,-50%) scale(1.06)}}
+
+/* Hide the unwanted nested scrollbar beside the scratch-card area without disabling scrolling. */
+.scratch-section,
+.scratch-section * {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+.scratch-section::-webkit-scrollbar,
+.scratch-section *::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+    background: transparent !important;
+}
+/* Scratch reveal wrappers should not create their own scroll container. */
+.scratch-section,
+.scratch-section .scratch-grid,
+.scratch-section .scratch-grid-grand {
+    overflow-y: visible !important;
+}
