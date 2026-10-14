@@ -555,115 +555,148 @@ function launchFireworks(){
 
     // ═══════════ SCRATCH REVEAL CELEBRATION ═══════════
 (function(){
+    // EDIT THIS VALUE in seconds to change only the full-screen EVENT 3 mega celebration.
+    // Example: 10 means ten seconds. The two small circles keep their original short celebration.
+    window.SCRATCH_MEGA_CELEBRATION_SECONDS = 5;
+
     window.playScratchCelebration = function(card){
         if(!card) return;
-        const existing = card.querySelector('.scratch-celebration-canvas');
+        const grand=card.classList.contains('grand');
+        const existing=grand
+            ? document.querySelector('.scratch-celebration-canvas.fullscreen')
+            : card.querySelector('.scratch-celebration-canvas.local');
         if(existing) existing.remove();
-        const canvas = document.createElement('canvas');
-        canvas.className = 'scratch-celebration-canvas';
+
+        const canvas=document.createElement('canvas');
+        canvas.className='scratch-celebration-canvas '+(grand?'fullscreen':'local');
         canvas.setAttribute('aria-hidden','true');
-        card.appendChild(canvas);
-
-        const ctx = canvas.getContext('2d');
-        if(!ctx) { canvas.remove(); return; }
-        const rect = card.getBoundingClientRect();
-        const size = Math.max(1, Math.round(Math.min(rect.width, rect.height)));
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = size * dpr;
-        canvas.height = size * dpr;
-        canvas.style.width = size + 'px';
-        canvas.style.height = size + 'px';
-        ctx.setTransform(dpr,0,0,dpr,0,0);
-
-        const grand = card.classList.contains('grand');
-        const particleCount = grand ? 120 : 72;
-        const burstRadius = grand ? size * .31 : size * .27;
-        const colors = ['#C9A84C','#E8C97A','#FAF3E0','#D4B85A','#FFFFFF','#8B6914'];
-        const bursts = [];
-        const particles = [];
-        const cx = size/2, cy = size/2;
-        const burstPoints = grand
-            ? [{x:size*.22,y:size*.25},{x:size*.78,y:size*.25},{x:size*.28,y:size*.74},{x:size*.72,y:size*.74}]
-            : [{x:size*.22,y:size*.27},{x:size*.78,y:size*.27},{x:size*.28,y:size*.73},{x:size*.72,y:size*.73}];
-
-        function burst(point, scale=1){
-            const b={x:point.x,y:point.y,life:0,maxLife:22,scale};
-            bursts.push(b);
-            const n=Math.round(particleCount*scale);
-            for(let i=0;i<n;i++){
-                const a=Math.random()*Math.PI*2;
-                const sp=(.9+Math.random()*2.7)*scale;
-                particles.push({
-                    x:b.x,y:b.y,
-                    vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,
-                    life:38+Math.random()*34,maxLife:72,
-                    size:(.7+Math.random()*1.7)*scale,
-                    color:colors[(Math.random()*colors.length)|0],
-                    gravity:.018+Math.random()*.025
+        if(grand){
+            document.body.appendChild(canvas);
+            const section=card.closest('.scratch-section');
+            if(section){
+                section.classList.add('all-events-revealed');
+                section.querySelectorAll('.scratch-sub-label').forEach((label,n)=>{
+                    label.textContent='EVENT '+(n+1);
                 });
             }
+        }else card.appendChild(canvas);
+
+        const ctx=canvas.getContext('2d');
+        if(!ctx){canvas.remove();return;}
+        const dpr=Math.min(window.devicePixelRatio||1,2);
+        let width=1,height=1;
+        function resize(){
+            if(grand){width=document.documentElement.clientWidth||window.innerWidth;height=window.innerHeight;}
+            else{const r=card.getBoundingClientRect();width=Math.max(1,Math.round(Math.min(r.width,r.height)));height=width;}
+            canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
+            canvas.style.width=width+'px';canvas.style.height=height+'px';
+            ctx.setTransform(dpr,0,0,dpr,0,0);
+        }
+        resize();
+        const size=Math.min(width,height);
+        const colors=['#C9A84C','#E8C97A','#FAF3E0','#D4B85A','#FFFFFF','#8B6914','#FFF1A8'];
+        const bursts=[],particles=[],rockets=[];
+        const duration=grand?Math.max(1,Number(window.SCRATCH_MEGA_CELEBRATION_SECONDS)||3)*1000:1450;
+        const started=performance.now(),endAt=started+duration;
+        const burstRadius=grand?Math.min(width,height)*.17:size*.27;
+
+        function burst(x,y,power=1){
+            const b={x,y,life:0,maxLife:25,power};bursts.push(b);
+            const count=Math.round((grand?125:72)*power);
+            for(let i=0;i<count;i++){
+                const angle=Math.random()*Math.PI*2;
+                const speed=(grand?1.2+Math.random()*4.2:.9+Math.random()*2.7)*power;
+                particles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,
+                    life:(grand?55+Math.random()*48:38+Math.random()*34),maxLife:grand?103:72,
+                    size:(.7+Math.random()*(grand?2.5:1.7))*power,
+                    color:colors[(Math.random()*colors.length)|0],gravity:grand?.012+Math.random()*.025:.018+Math.random()*.025});
+            }
+        }
+        function launchRocket(){
+            const x=width*(.1+Math.random()*.8),targetX=width*(.08+Math.random()*.84);
+            const targetY=height*(.12+Math.random()*.58);
+            rockets.push({x,y:height+8,vx:(targetX-x)/45,vy:-(5+Math.random()*4),targetX,targetY,life:0,color:colors[(Math.random()*colors.length)|0]});
         }
 
-        // Three quick celebratory bursts, then it stops completely.
-        burst(burstPoints[0],1);
-        setTimeout(()=>burst(burstPoints[1],.9),180);
-        setTimeout(()=>burst(burstPoints[2],.82),360);
-        if(grand) setTimeout(()=>burst(burstPoints[3],1.05),560);
+        if(grand){
+            // Several large opening fireworks spread over the whole screen.
+            burst(width*.22,height*.24,1.25);
+            burst(width*.78,height*.25,1.15);
+            burst(width*.28,height*.72,1.1);
+            burst(width*.74,height*.70,1.2);
+            // Rocket launches continue throughout the configurable duration.
+            launchRocket();
+            const rocketTimer=setInterval(()=>{if(performance.now()<endAt)launchRocket();else clearInterval(rocketTimer);},Math.max(180,Math.min(420,duration/9)));
+            // Additional timed crackers: keep launching until the configured duration ends.
+            const crackerTimer=setInterval(()=>{
+                if(performance.now()>=endAt){clearInterval(crackerTimer);return;}
+                burst(width*(.12+Math.random()*.76),height*(.12+Math.random()*.62),.55+Math.random()*.7);
+            },Math.max(260,Math.min(650,duration/6)));
+            canvas._celebrationTimers=[rocketTimer,crackerTimer];
+        }else{
+            burst(width*.22,height*.27,1);
+            setTimeout(()=>{if(canvas.isConnected)burst(width*.78,height*.27,.9);},180);
+            setTimeout(()=>{if(canvas.isConnected)burst(width*.28,height*.73,.82);},360);
+        }
 
         let last=performance.now();
-        const endAt=last+(grand?1850:1450);
         function frame(now){
-            const dt=Math.min(2,(now-last)/16.67); last=now;
-            ctx.clearRect(0,0,size,size);
-            bursts.forEach(b=>{
-                b.life+=dt;
-                const p=Math.min(1,b.life/b.maxLife);
-                const alpha=Math.max(0,1-p);
-                ctx.save();
-                ctx.globalAlpha=alpha*.9;
-                ctx.strokeStyle='#E8C97A';
-                ctx.lineWidth=1;
-                ctx.shadowBlur=10;
-                ctx.shadowColor='#E8C97A';
-                for(let i=0;i<12;i++){
-                    const a=i*Math.PI/6;
-                    const r1=2+p*3;
-                    const r2=Math.min(burstRadius,size*.38)*p+5;
-                    ctx.beginPath();
-                    ctx.moveTo(b.x+Math.cos(a)*r1,b.y+Math.sin(a)*r1);
-                    ctx.lineTo(b.x+Math.cos(a)*r2,b.y+Math.sin(a)*r2);
-                    ctx.stroke();
-                }
-                ctx.globalAlpha=alpha*.85;
-                ctx.fillStyle='#FAF3E0';
-                ctx.beginPath();
-                ctx.arc(b.x,b.y,Math.max(1,(grand?11:8)*(1-p)),0,Math.PI*2);
-                ctx.fill();
+            const dt=Math.min(2,(now-last)/16.67);last=now;
+            ctx.clearRect(0,0,width,height);
+            // Firework rockets with bright trails, then a burst at the apex.
+            for(let i=rockets.length-1;i>=0;i--){
+                const r=rockets[i],ox=r.x,oy=r.y;
+                r.x+=r.vx*dt;r.y+=r.vy*dt;r.vy+=.045*dt;r.life+=dt;
+                ctx.save();ctx.globalAlpha=.95;ctx.strokeStyle=r.color;ctx.lineWidth=2.2;
+                ctx.shadowBlur=14;ctx.shadowColor=r.color;ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(r.x,r.y);ctx.stroke();
+                for(let k=1;k<=4;k++){ctx.globalAlpha=.22;ctx.beginPath();ctx.arc(r.x-r.vx*k*2,r.y-r.vy*k*2,Math.max(.5,2-k*.3),0,Math.PI*2);ctx.fillStyle=r.color;ctx.fill();}
                 ctx.restore();
-            });
+                if(r.y<=r.targetY||r.life>80){burst(r.x,r.y,.75+Math.random()*.6);rockets.splice(i,1);}
+            }
+            for(let i=bursts.length-1;i>=0;i--){
+                const b=bursts[i];b.life+=dt;const p=Math.min(1,b.life/b.maxLife),alpha=(1-p)*b.power;
+                ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle='#E8C97A';ctx.lineWidth=grand?1.4:1;
+                ctx.shadowBlur=grand?18:10;ctx.shadowColor='#E8C97A';
+                for(let k=0;k<16;k++){
+                    const ang=k*Math.PI/8,r1=2+p*4,r2=Math.min(burstRadius,grand?Math.min(width,height)*.25:size*.38)*p+5;
+                    ctx.beginPath();ctx.moveTo(b.x+Math.cos(ang)*r1,b.y+Math.sin(ang)*r1);ctx.lineTo(b.x+Math.cos(ang)*r2,b.y+Math.sin(ang)*r2);ctx.stroke();
+                }
+                ctx.restore();
+                if(b.life>=b.maxLife)bursts.splice(i,1);
+            }
             for(let i=particles.length-1;i>=0;i--){
-                const q=particles[i];
-                const ox=q.x,oy=q.y;
-                q.x+=q.vx*dt; q.y+=q.vy*dt; q.vy+=q.gravity*dt; q.vx*=Math.pow(.985,dt); q.life-=dt;
+                const q=particles[i],ox=q.x,oy=q.y;
+                q.x+=q.vx*dt;q.y+=q.vy*dt;q.vy+=q.gravity*dt;q.vx*=Math.pow(.985,dt);q.life-=dt;
                 if(q.life<=0){particles.splice(i,1);continue;}
-                ctx.save();
-                ctx.globalAlpha=Math.min(1,q.life/18)*.95;
-                ctx.fillStyle=q.color; ctx.shadowBlur=7; ctx.shadowColor=q.color;
-                ctx.strokeStyle=q.color; ctx.lineWidth=Math.max(.45,q.size*.6);
+                ctx.save();ctx.globalAlpha=Math.min(1,q.life/22)*.98;ctx.fillStyle=q.color;ctx.strokeStyle=q.color;
+                ctx.shadowBlur=grand?12:7;ctx.shadowColor=q.color;ctx.lineWidth=Math.max(.5,q.size*.7);
                 ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(q.x,q.y);ctx.stroke();
                 ctx.beginPath();ctx.arc(q.x,q.y,q.size,0,Math.PI*2);ctx.fill();ctx.restore();
             }
-            if(now<endAt || particles.length || bursts.some(b=>b.life<b.maxLife)){
-                requestAnimationFrame(frame);
-            }else{
-                ctx.clearRect(0,0,size,size);
+            if(now<endAt||rockets.length||particles.length||bursts.length){requestAnimationFrame(frame);}
+            else{
+                ctx.clearRect(0,0,width,height);
                 canvas.classList.add('finished');
-                setTimeout(()=>canvas.remove(),220);
+                if(canvas._celebrationTimers)canvas._celebrationTimers.forEach(clearInterval);
+                setTimeout(()=>{clearTimeout(hardCleanup);canvas.remove();},250);
             }
         }
         requestAnimationFrame(frame);
+        // Safety cleanup: the full-screen overlay must never remain stuck if animation frames pause.
+        const hardCleanup=setTimeout(()=>{
+            if(canvas.isConnected){
+                if(canvas._celebrationTimers)canvas._celebrationTimers.forEach(clearInterval);
+                canvas.remove();
+            }
+        },duration+6500);
+        if(grand){
+            const onResize=()=>resize();window.addEventListener('resize',onResize);
+            const observer=new MutationObserver(()=>{if(!canvas.isConnected){window.removeEventListener('resize',onResize);observer.disconnect();if(canvas._celebrationTimers)canvas._celebrationTimers.forEach(clearInterval);}});
+            observer.observe(document.body,{childList:true});
+        }
     };
 })();
+
 
 // ═══════════ SCRATCH CARD FUNCTIONALITY ═══════════
     (function(){
@@ -1598,9 +1631,123 @@ function launchFireworks(){
 
 
 
-// ═══════════ GALLERY LIGHTBOX ═══════════
-(function(){const box=document.getElementById('gallery-lightbox'),im=document.getElementById('gallery-lightbox-image'),cap=document.getElementById('gallery-lightbox-caption');if(!box)return;const items=[...document.querySelectorAll('.gallery-item img')];let i=0,x=0;function show(n){i=(n+items.length)%items.length;const e=items[i];im.src=e.currentSrc||e.src;im.alt=e.alt||'';cap.textContent=e.alt||'';box.classList.add('open');box.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}function close(){box.classList.remove('open');box.setAttribute('aria-hidden','true');document.body.style.overflow=''}items.forEach((e,n)=>e.parentElement.addEventListener('click',()=>show(n)));document.getElementById('gallery-close')?.addEventListener('click',close);document.getElementById('gallery-prev')?.addEventListener('click',()=>show(i-1));document.getElementById('gallery-next')?.addEventListener('click',()=>show(i+1));document.addEventListener('keydown',e=>{if(!box.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1)});box.addEventListener('click',e=>{if(e.target===box)close()});im.addEventListener('touchstart',e=>x=e.changedTouches[0].clientX,{passive:true});im.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-x;if(Math.abs(d)>45)show(i+(d<0?1:-1))},{passive:true})})();
-
+// ═══════════ FAMILY GALLERY LIGHTBOX — ZOOM / PAN / NAVIGATION ═══════════
+(function(){
+ const box=document.getElementById('gallery-lightbox');
+ const im=document.getElementById('gallery-lightbox-image');
+ const cap=document.getElementById('gallery-lightbox-caption');
+ const gallery=document.getElementById('family-gallery-section');
+ if(!box||!im||!gallery)return;
+ const stage=box.querySelector('.lightbox-image-stage');
+ const items=Array.from(gallery.querySelectorAll('.gallery-grid img')).filter(img=>img.closest('.gallery-item'));
+ const closeBtn=document.getElementById('gallery-close');
+ const prevBtn=document.getElementById('gallery-prev');
+ const nextBtn=document.getElementById('gallery-next');
+ const zoomIn=document.getElementById('gallery-zoom-in');
+ const zoomOut=document.getElementById('gallery-zoom-out');
+ const zoomReset=document.getElementById('gallery-zoom-reset');
+ let index=0,scale=1,tx=0,ty=0,points=new Map(),pinch=null,drag=null,swipe=null,lastTap=0;
+ const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
+ const isOpen=()=>box.classList.contains('open');
+ function paint(){im.style.transform=`translate3d(${tx}px,${ty}px,0) scale(${scale})`;box.classList.toggle('zoomed',scale>1.01);if(stage)stage.style.cursor=scale>1?'grab':'default'}
+ function reset(){scale=1;tx=0;ty=0;paint()}
+ function boundPan(){
+   const r=im.getBoundingClientRect(), br=box.getBoundingClientRect();
+   const maxX=Math.max(0,(r.width-im.offsetWidth)/2),maxY=Math.max(0,(r.height-im.offsetHeight)/2);
+   tx=clamp(tx,-maxX,maxX);ty=clamp(ty,-maxY,maxY);
+ }
+ function setScale(next,anchorX,anchorY){
+   const old=scale,ns=clamp(next,1,5);
+   if(ns===old)return;
+   if(anchorX!=null&&anchorY!=null&&old>0){
+     const rect=im.getBoundingClientRect(),cx=anchorX-(rect.left+rect.width/2),cy=anchorY-(rect.top+rect.height/2);
+     tx-=(cx/old)*(ns-old);ty-=(cy/old)*(ns-old);
+   }
+   scale=ns;if(scale===1){tx=0;ty=0}else boundPan();paint();
+ }
+ function show(n){
+   if(!items.length)return;
+   index=(n+items.length)%items.length;
+   const item=items[index];im.src=item.currentSrc||item.src;im.alt=item.alt||'Family gallery photo';
+   if(cap)cap.textContent=item.alt||`Photo ${index+1} of ${items.length}`;
+   reset();box.classList.add('open');box.setAttribute('aria-hidden','false');
+   document.body.style.overflow='hidden';
+ }
+ function close(){
+   box.classList.remove('open');box.setAttribute('aria-hidden','true');
+   document.body.style.overflow='';reset();points.clear();pinch=null;drag=null;swipe=null;
+ }
+ items.forEach((img,n)=>{
+   const target=img.closest('.gallery-item')||img.parentElement;
+   target.style.cursor='zoom-in';
+   target.addEventListener('click',e=>{if(e.target.closest('a'))e.preventDefault();show(n)});
+ });
+ // Explicit, independent handlers ensure all controls remain clickable above the image stage.
+ if(closeBtn)closeBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();close()});
+ if(prevBtn)prevBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();show(index-1)});
+ if(nextBtn)nextBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();show(index+1)});
+ if(zoomIn)zoomIn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();setScale(scale+.5)});
+ if(zoomOut)zoomOut.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();setScale(scale-.5)});
+ if(zoomReset)zoomReset.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();reset()});
+ box.addEventListener('click',e=>{if(e.target===box)close()});
+ document.addEventListener('keydown',e=>{
+   if(!isOpen())return;
+   if(e.key==='Escape')close();
+   else if(e.key==='ArrowLeft')show(index-1);
+   else if(e.key==='ArrowRight')show(index+1);
+   else if(e.key==='+'||e.key==='=')setScale(scale+.5);
+   else if(e.key==='-')setScale(scale-.5);
+   else if(e.key==='0')reset();
+ });
+ // Mouse wheel zoom (desktop), zooming around the pointer.
+ box.addEventListener('wheel',e=>{
+   if(!isOpen())return;
+   e.preventDefault();setScale(scale+(e.deltaY<0?.18:-.18),e.clientX,e.clientY);
+ },{passive:false});
+ if(stage){
+   stage.style.touchAction='none';
+   stage.addEventListener('pointerdown',e=>{
+     if(e.target.closest('button'))return;
+     e.preventDefault();stage.setPointerCapture?.(e.pointerId);
+     points.set(e.pointerId,{x:e.clientX,y:e.clientY});
+     if(points.size===1){drag={x:e.clientX,y:e.clientY,tx,ty,moved:false};swipe={x:e.clientX,y:e.clientY};}
+     else if(points.size===2){
+       const a=Array.from(points.values());pinch={distance:Math.max(1,Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)),scale};
+       drag=null;swipe=null;
+     }
+   });
+   stage.addEventListener('pointermove',e=>{
+     if(!points.has(e.pointerId))return;
+     e.preventDefault();points.set(e.pointerId,{x:e.clientX,y:e.clientY});
+     if(points.size>=2&&pinch){
+       const a=Array.from(points.values()),d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
+       setScale(pinch.scale*d/pinch.distance);return;
+     }
+     if(drag){
+       const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+       if(Math.abs(dx)+Math.abs(dy)>3)drag.moved=true;
+       if(scale>1){tx=drag.tx+dx;ty=drag.ty+dy;boundPan();paint();}
+     }
+   });
+   function finish(e){
+     const start=swipe;points.delete(e.pointerId);
+     if(points.size<2)pinch=null;
+     if(points.size===0){
+       if(start&&scale===1){
+         const dx=e.clientX-start.x,dy=e.clientY-start.y;
+         if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.25)show(index+(dx<0?1:-1));
+         else if(Math.abs(dx)<10&&Math.abs(dy)<10){
+           const now=Date.now();if(now-lastTap<300){setScale(scale===1?2.5:1,e.clientX,e.clientY);lastTap=0}else lastTap=now;
+         }
+       }
+       drag=null;swipe=null;
+     }
+   }
+   stage.addEventListener('pointerup',finish);stage.addEventListener('pointercancel',finish);
+   stage.addEventListener('lostpointercapture',e=>{points.delete(e.pointerId);if(points.size<2)pinch=null;if(!points.size){drag=null;swipe=null}});
+   stage.addEventListener('dblclick',e=>{e.preventDefault();setScale(scale===1?2.5:1,e.clientX,e.clientY)});
+ }
+})();
 
 
 // ═══════════ EVENT INTERACTIONS / PERFORMANCE ═══════════
