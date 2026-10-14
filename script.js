@@ -565,7 +565,7 @@ function launchFireworks(){
         const existing=grand
             ? document.querySelector('.scratch-celebration-canvas.fullscreen')
             : card.querySelector('.scratch-celebration-canvas.local');
-        if(existing) existing.remove();
+        if(existing){if(existing._celebrationTimers)existing._celebrationTimers.forEach(clearInterval);existing.remove();}
 
         const canvas=document.createElement('canvas');
         canvas.className='scratch-celebration-canvas '+(grand?'fullscreen':'local');
@@ -602,12 +602,12 @@ function launchFireworks(){
 
         function burst(x,y,power=1){
             const b={x,y,life:0,maxLife:25,power};bursts.push(b);
-            const count=Math.round((grand?125:72)*power);
+            const count=Math.round((grand?34:28)*power);
             for(let i=0;i<count;i++){
                 const angle=Math.random()*Math.PI*2;
                 const speed=(grand?1.2+Math.random()*4.2:.9+Math.random()*2.7)*power;
                 particles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,
-                    life:(grand?55+Math.random()*48:38+Math.random()*34),maxLife:grand?103:72,
+                    life:(grand?38+Math.random()*30:28+Math.random()*24),maxLife:grand?68:52,
                     size:(.7+Math.random()*(grand?2.5:1.7))*power,
                     color:colors[(Math.random()*colors.length)|0],gravity:grand?.012+Math.random()*.025:.018+Math.random()*.025});
             }
@@ -641,24 +641,24 @@ function launchFireworks(){
 
         let last=performance.now();
         function frame(now){
-            const dt=Math.min(2,(now-last)/16.67);last=now;
+            const dt=Math.min(4,Math.max(.5,(now-last)/16.67));last=now;
             ctx.clearRect(0,0,width,height);
             // Firework rockets with bright trails, then a burst at the apex.
             for(let i=rockets.length-1;i>=0;i--){
                 const r=rockets[i],ox=r.x,oy=r.y;
                 r.x+=r.vx*dt;r.y+=r.vy*dt;r.vy+=.045*dt;r.life+=dt;
                 ctx.save();ctx.globalAlpha=.95;ctx.strokeStyle=r.color;ctx.lineWidth=2.2;
-                ctx.shadowBlur=14;ctx.shadowColor=r.color;ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(r.x,r.y);ctx.stroke();
-                for(let k=1;k<=4;k++){ctx.globalAlpha=.22;ctx.beginPath();ctx.arc(r.x-r.vx*k*2,r.y-r.vy*k*2,Math.max(.5,2-k*.3),0,Math.PI*2);ctx.fillStyle=r.color;ctx.fill();}
+                ctx.shadowBlur=0;ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(r.x,r.y);ctx.stroke();
+                for(let k=1;k<=2;k++){ctx.globalAlpha=.22;ctx.beginPath();ctx.arc(r.x-r.vx*k*2,r.y-r.vy*k*2,Math.max(.5,2-k*.3),0,Math.PI*2);ctx.fillStyle=r.color;ctx.fill();}
                 ctx.restore();
                 if(r.y<=r.targetY||r.life>80){burst(r.x,r.y,.75+Math.random()*.6);rockets.splice(i,1);}
             }
             for(let i=bursts.length-1;i>=0;i--){
                 const b=bursts[i];b.life+=dt;const p=Math.min(1,b.life/b.maxLife),alpha=(1-p)*b.power;
                 ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle='#E8C97A';ctx.lineWidth=grand?1.4:1;
-                ctx.shadowBlur=grand?18:10;ctx.shadowColor='#E8C97A';
-                for(let k=0;k<16;k++){
-                    const ang=k*Math.PI/8,r1=2+p*4,r2=Math.min(burstRadius,grand?Math.min(width,height)*.25:size*.38)*p+5;
+                ctx.shadowBlur=0;
+                for(let k=0;k<8;k++){
+                    const ang=k*Math.PI/4,r1=2+p*4,r2=Math.min(burstRadius,grand?Math.min(width,height)*.25:size*.38)*p+5;
                     ctx.beginPath();ctx.moveTo(b.x+Math.cos(ang)*r1,b.y+Math.sin(ang)*r1);ctx.lineTo(b.x+Math.cos(ang)*r2,b.y+Math.sin(ang)*r2);ctx.stroke();
                 }
                 ctx.restore();
@@ -669,7 +669,7 @@ function launchFireworks(){
                 q.x+=q.vx*dt;q.y+=q.vy*dt;q.vy+=q.gravity*dt;q.vx*=Math.pow(.985,dt);q.life-=dt;
                 if(q.life<=0){particles.splice(i,1);continue;}
                 ctx.save();ctx.globalAlpha=Math.min(1,q.life/22)*.98;ctx.fillStyle=q.color;ctx.strokeStyle=q.color;
-                ctx.shadowBlur=grand?12:7;ctx.shadowColor=q.color;ctx.lineWidth=Math.max(.5,q.size*.7);
+                ctx.shadowBlur=0;ctx.lineWidth=Math.max(.5,q.size*.7);
                 ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(q.x,q.y);ctx.stroke();
                 ctx.beginPath();ctx.arc(q.x,q.y,q.size,0,Math.PI*2);ctx.fill();ctx.restore();
             }
@@ -697,6 +697,17 @@ function launchFireworks(){
     };
 })();
 
+
+// Ensure mouse-wheel scrolling over the scratch section moves the main page, not a nested area.
+(function keepScratchSectionFromTrappingScroll(){
+    const section = document.querySelector('.scratch-section');
+    if (!section) return;
+    section.addEventListener('wheel', function(event) {
+        if (event.ctrlKey || event.metaKey || event.deltaY === 0) return;
+        event.preventDefault();
+        window.scrollBy({ top: event.deltaY, left: 0, behavior: 'auto' });
+    }, { passive: false });
+})();
 
 // ═══════════ SCRATCH CARD FUNCTIONALITY ═══════════
     (function(){
